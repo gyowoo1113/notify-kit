@@ -1,4 +1,4 @@
-package com.example.notify_kit_spring;
+package io.github.gyowoo1113.notifykit.spring;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

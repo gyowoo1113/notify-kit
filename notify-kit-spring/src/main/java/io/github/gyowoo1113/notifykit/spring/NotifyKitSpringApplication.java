@@ -1,4 +1,4 @@
-package com.example.notify_kit_spring;
+package io.github.gyowoo1113.notifykit.spring;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
