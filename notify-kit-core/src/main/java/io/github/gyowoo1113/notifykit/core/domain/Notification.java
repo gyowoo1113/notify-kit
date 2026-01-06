@@ -1,5 +1,6 @@
 package io.github.gyowoo1113.notifykit.core.domain;
 
+import io.github.gyowoo1113.notifykit.core.domain.support.NotificationCommand;
 import io.github.gyowoo1113.notifykit.core.domain.support.NotificationStatus;
 import io.github.gyowoo1113.notifykit.core.domain.support.NotificationType;
 import lombok.Builder;
@@ -30,5 +31,18 @@ public class Notification {
         this.linkUrl = linkUrl;
         this.createdAt = createdAt;
         this.readAt = readAt;
+    }
+
+    public static Notification from(NotificationCommand notificationCommand){
+        return Notification.builder()
+                .receiverId(notificationCommand.receiverId())
+                .title(notificationCommand.title())
+                .content(notificationCommand.content())
+                .notificationType(notificationCommand.notificationType())
+                .notificationStatus(notificationCommand.notificationStatus())
+                .linkUrl(notificationCommand.linkUrl())
+                .createdAt(notificationCommand.createdAt())
+                .readAt(notificationCommand.readAt())
+                .build();
     }
 }
