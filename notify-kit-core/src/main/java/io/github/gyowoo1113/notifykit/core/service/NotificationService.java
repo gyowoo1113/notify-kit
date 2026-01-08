@@ -14,4 +14,9 @@ public class NotificationService {
         notification = repository.save(notification);
         return notification;
     }
+
+    public Notification getById(long id){
+        // TODO : add ResourceNotFoundException
+        return repository.getById(id).orElseThrow();
+    }
 }
