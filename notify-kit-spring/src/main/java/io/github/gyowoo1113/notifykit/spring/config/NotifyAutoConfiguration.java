@@ -3,12 +3,12 @@ package io.github.gyowoo1113.notifykit.spring.config;
 import io.github.gyowoo1113.notifykit.core.service.NotificationService;
 import io.github.gyowoo1113.notifykit.core.service.port.NotificationRepository;
 import io.github.gyowoo1113.notifykit.spring.application.NotificationFacade;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
-@Configuration
+@AutoConfiguration
 @ConditionalOnBean(NotificationRepository.class)
 public class NotifyAutoConfiguration {
 
