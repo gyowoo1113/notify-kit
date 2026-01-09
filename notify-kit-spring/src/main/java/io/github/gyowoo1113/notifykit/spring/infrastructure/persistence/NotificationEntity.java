@@ -1,5 +1,6 @@
 package io.github.gyowoo1113.notifykit.spring.infrastructure.persistence;
 
+import io.github.gyowoo1113.notifykit.core.domain.Notification;
 import io.github.gyowoo1113.notifykit.core.domain.support.NotificationCommand;
 import io.github.gyowoo1113.notifykit.core.domain.support.NotificationStatus;
 import io.github.gyowoo1113.notifykit.core.domain.support.NotificationType;
@@ -43,5 +44,31 @@ public class NotificationEntity {
     @Column(name="readAt")
     private LocalDateTime readAt;
 
-    // TODO : add from / ToModel (Notification을 쓸지 Command 쓸지 생각해봐야함)
+    public static NotificationEntity from(Notification notification){
+        NotificationEntity entity = new NotificationEntity();
+        entity.id = notification.getId();
+        entity.receiverId = notification.getReceiverId();
+        entity.title = notification.getTitle();
+        entity.content = notification.getContent();
+        entity.notificationType = notification.getNotificationType();
+        entity.notificationStatus = notification.getNotificationStatus();
+        entity.linkUrl = notification.getLinkUrl();
+        entity.createdAt = notification.getCreatedAt();
+        entity.readAt = notification.getReadAt();
+        return entity;
+    }
+
+    public Notification toModel(){
+        return Notification.builder()
+                .id(id)
+                .receiverId(receiverId)
+                .title(title)
+                .content(content)
+                .notificationType(notificationType)
+                .notificationStatus(notificationStatus)
+                .linkUrl(linkUrl)
+                .createdAt(createdAt)
+                .readAt(readAt)
+                .build();
+    }
 }

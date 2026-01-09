@@ -13,11 +13,14 @@ public class NotificationRepositoryAdapter implements NotificationRepository {
 
     @Override
     public Notification save(Notification notification) {
-        return null;
+        NotificationEntity entity = NotificationEntity.from(notification);
+        NotificationEntity saved = repository.save(entity);
+        return saved.toModel();
     }
 
     @Override
     public Optional<Notification> getById(long id) {
-        return Optional.empty();
+        return repository.findById(id)
+                .map(NotificationEntity::toModel);
     }
 }
