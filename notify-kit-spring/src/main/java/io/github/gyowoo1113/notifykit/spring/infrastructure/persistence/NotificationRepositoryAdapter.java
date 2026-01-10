@@ -3,9 +3,11 @@ package io.github.gyowoo1113.notifykit.spring.infrastructure.persistence;
 import io.github.gyowoo1113.notifykit.core.domain.Notification;
 import io.github.gyowoo1113.notifykit.core.service.port.NotificationRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
+@Component
 @RequiredArgsConstructor
 public class NotificationRepositoryAdapter implements NotificationRepository {
 
