@@ -16,4 +16,9 @@ public class NotificationFacade {
     public Notification create(NotificationCommand command){
         return coreService.create(command);
     }
+
+    @Transactional(readOnly = true)
+    public Notification getById(Long id){
+        return coreService.getById(id);
+    }
 }
