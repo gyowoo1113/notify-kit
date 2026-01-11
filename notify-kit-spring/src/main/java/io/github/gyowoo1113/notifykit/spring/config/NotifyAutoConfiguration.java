@@ -10,12 +10,11 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.context.annotation.Bean;
 
 @AutoConfiguration
-@AutoConfigureAfter(NotifyJpaAutoConfiguration.class)
 public class NotifyAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    @ConditionalOnBean(io.github.gyowoo1113.notifykit.core.service.port.NotificationRepository.class)
+    @ConditionalOnBean(NotificationRepository.class)
     public NotificationService notificationService(NotificationRepository notificationRepository){
         return new NotificationService(notificationRepository);
     }
