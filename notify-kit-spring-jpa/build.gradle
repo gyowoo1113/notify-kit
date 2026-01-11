@@ -19,7 +19,7 @@ repositories {
 }
 
 dependencies {
-	api project(':notify-kit-core')
+	api project(':notify-kit-spring-starter')
 	api 'org.springframework.boot:spring-boot-autoconfigure'
 
 	implementation 'org.springframework:spring-tx'

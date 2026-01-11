@@ -1,7 +1,6 @@
-package io.github.gyowoo1113.notifykit.spring.infrastructure.persistence;
+package io.github.gyowoo1113.notifykit.spring.jpa.infrastructure.persistence;
 
 import io.github.gyowoo1113.notifykit.core.domain.Notification;
-import io.github.gyowoo1113.notifykit.core.domain.support.NotificationCommand;
 import io.github.gyowoo1113.notifykit.core.domain.support.NotificationStatus;
 import io.github.gyowoo1113.notifykit.core.domain.support.NotificationType;
 import jakarta.persistence.*;

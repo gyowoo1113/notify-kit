@@ -1,5 +1,6 @@
 rootProject.name = 'notify-kit'
 
 include 'notify-kit-core'
-include 'notify-kit-spring'
+include 'notify-kit-spring-starter'
+include 'notify-kit-spring-jpa'
 include 'notify-kit-example'

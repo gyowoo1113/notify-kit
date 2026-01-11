@@ -1,9 +1,10 @@
-package io.github.gyowoo1113.notifykit.spring.config;
+package io.github.gyowoo1113.notifykit.spring.jpa.config;
 
 import io.github.gyowoo1113.notifykit.core.service.port.NotificationRepository;
-import io.github.gyowoo1113.notifykit.spring.infrastructure.persistence.NotificationEntity;
-import io.github.gyowoo1113.notifykit.spring.infrastructure.persistence.NotificationJPARepository;
-import io.github.gyowoo1113.notifykit.spring.infrastructure.persistence.NotificationRepositoryAdapter;
+import io.github.gyowoo1113.notifykit.spring.config.NotifyAutoConfiguration;
+import io.github.gyowoo1113.notifykit.spring.jpa.infrastructure.persistence.NotificationEntity;
+import io.github.gyowoo1113.notifykit.spring.jpa.infrastructure.persistence.NotificationJPARepository;
+import io.github.gyowoo1113.notifykit.spring.jpa.infrastructure.persistence.NotificationRepositoryAdapter;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;

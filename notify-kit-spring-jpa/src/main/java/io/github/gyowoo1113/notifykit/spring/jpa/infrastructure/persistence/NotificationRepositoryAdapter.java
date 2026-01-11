@@ -1,4 +1,4 @@
-package io.github.gyowoo1113.notifykit.spring.infrastructure.persistence;
+package io.github.gyowoo1113.notifykit.spring.jpa.infrastructure.persistence;
 
 import io.github.gyowoo1113.notifykit.core.domain.Notification;
 import io.github.gyowoo1113.notifykit.core.service.port.NotificationRepository;
