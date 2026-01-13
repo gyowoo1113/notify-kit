@@ -24,6 +24,7 @@ class NotificationTest {
                 , Instant.now()
                 , Instant.now()
                 , null
+                , null
         );
 
         // when

@@ -7,7 +7,6 @@ import lombok.Builder;
 import lombok.Getter;
 
 import java.time.Instant;
-import java.time.LocalDateTime;
 
 @Getter
 public class Notification {
@@ -20,10 +19,11 @@ public class Notification {
     private final String linkUrl;
     private final Instant createdAt;
     private final Instant readAt;
+    private final Instant updatedAt;
     private final Instant deletedAt;
 
     @Builder
-    public Notification(Long id, Long receiverId, String title, String content, NotificationType notificationType, NotificationStatus notificationStatus, String linkUrl, Instant createdAt, Instant readAt, Instant deletedAt) {
+    public Notification(Long id, Long receiverId, String title, String content, NotificationType notificationType, NotificationStatus notificationStatus, String linkUrl, Instant createdAt, Instant readAt, Instant updatedAt, Instant deletedAt) {
         this.id = id;
         this.receiverId = receiverId;
         this.title = title;
@@ -33,6 +33,7 @@ public class Notification {
         this.linkUrl = linkUrl;
         this.createdAt = createdAt;
         this.readAt = readAt;
+        this.updatedAt = updatedAt;
         this.deletedAt = deletedAt;
     }
 
@@ -46,6 +47,7 @@ public class Notification {
                 .linkUrl(notificationCreate.linkUrl())
                 .createdAt(notificationCreate.createdAt())
                 .readAt(notificationCreate.readAt())
+                .updatedAt(notificationCreate.updatedAt())
                 .deletedAt(notificationCreate.deletedAt())
                 .build();
     }

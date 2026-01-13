@@ -43,6 +43,9 @@ public class NotificationEntity {
     @Column(name="readAt")
     private Instant readAt;
 
+    @Column(name="updatedAt")
+    private Instant updatedAt;
+
     @Column(name="deletedAt")
     private Instant deletedAt;
 
@@ -57,6 +60,7 @@ public class NotificationEntity {
         entity.linkUrl = notification.getLinkUrl();
         entity.createdAt = notification.getCreatedAt();
         entity.readAt = notification.getReadAt();
+        entity.updatedAt = notification.getUpdatedAt();
         entity.deletedAt = notification.getDeletedAt();
         return entity;
     }
@@ -72,6 +76,7 @@ public class NotificationEntity {
                 .linkUrl(linkUrl)
                 .createdAt(createdAt)
                 .readAt(readAt)
+                .updatedAt(updatedAt)
                 .deletedAt(deletedAt)
                 .build();
     }
