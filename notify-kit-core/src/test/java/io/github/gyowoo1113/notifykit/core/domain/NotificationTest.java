@@ -6,6 +6,7 @@ import io.github.gyowoo1113.notifykit.core.domain.support.NotificationType;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
 
 class NotificationTest {
@@ -20,8 +21,8 @@ class NotificationTest {
                 , NotificationType.COMMENT
                 , NotificationStatus.UNREAD
                 , null
-                , LocalDateTime.now()
-                , LocalDateTime.now()
+                , Instant.now()
+                , Instant.now()
                 , null
         );
 

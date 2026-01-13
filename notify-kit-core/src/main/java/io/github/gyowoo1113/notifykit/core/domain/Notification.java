@@ -6,6 +6,7 @@ import io.github.gyowoo1113.notifykit.core.domain.support.NotificationType;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
 
 @Getter
@@ -17,12 +18,12 @@ public class Notification {
     private final NotificationType notificationType;
     private final NotificationStatus notificationStatus;
     private final String linkUrl;
-    private final LocalDateTime createdAt;
-    private final LocalDateTime readAt;
-    private final LocalDateTime deletedAt;
+    private final Instant createdAt;
+    private final Instant readAt;
+    private final Instant deletedAt;
 
     @Builder
-    public Notification(Long id, Long receiverId, String title, String content, NotificationType notificationType, NotificationStatus notificationStatus, String linkUrl, LocalDateTime createdAt, LocalDateTime readAt, LocalDateTime deletedAt) {
+    public Notification(Long id, Long receiverId, String title, String content, NotificationType notificationType, NotificationStatus notificationStatus, String linkUrl, Instant createdAt, Instant readAt, Instant deletedAt) {
         this.id = id;
         this.receiverId = receiverId;
         this.title = title;

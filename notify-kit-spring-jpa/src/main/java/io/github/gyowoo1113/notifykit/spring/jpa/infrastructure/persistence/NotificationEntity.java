@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 @Getter
 @Setter
@@ -38,10 +38,13 @@ public class NotificationEntity {
     private String linkUrl;
 
     @Column(name="createdAt")
-    private LocalDateTime createdAt;
+    private Instant createdAt;
 
     @Column(name="readAt")
-    private LocalDateTime readAt;
+    private Instant readAt;
+
+    @Column(name="deletedAt")
+    private Instant deletedAt;
 
     public static NotificationEntity from(Notification notification){
         NotificationEntity entity = new NotificationEntity();
@@ -54,6 +57,7 @@ public class NotificationEntity {
         entity.linkUrl = notification.getLinkUrl();
         entity.createdAt = notification.getCreatedAt();
         entity.readAt = notification.getReadAt();
+        entity.deletedAt = notification.getDeletedAt();
         return entity;
     }
 
@@ -68,6 +72,7 @@ public class NotificationEntity {
                 .linkUrl(linkUrl)
                 .createdAt(createdAt)
                 .readAt(readAt)
+                .deletedAt(deletedAt)
                 .build();
     }
 }
