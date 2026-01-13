@@ -7,7 +7,6 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.time.Instant;
-import java.time.LocalDateTime;
 
 class NotificationTest {
 
@@ -28,7 +27,7 @@ class NotificationTest {
         );
 
         // when
-        Notification notification = Notification.from(create);
+        Notification notification = Notification.create(create, Instant.now());
 
         // then
         Assertions.assertThat(notification.getId()).isNull();

@@ -37,18 +37,19 @@ public class Notification {
         this.deletedAt = deletedAt;
     }
 
-    public static Notification from(NotificationCreate notificationCreate){
+    private static <T> T or(T newVal, T oldVal){
+        return newVal != null ? newVal : oldVal;
+    }
+
+    public static Notification create(NotificationCreate notificationCreate, Instant now){
         return Notification.builder()
                 .receiverId(notificationCreate.receiverId())
                 .title(notificationCreate.title())
                 .content(notificationCreate.content())
                 .notificationType(notificationCreate.notificationType())
-                .notificationStatus(notificationCreate.notificationStatus())
+                .notificationStatus(NotificationStatus.UNREAD)
                 .linkUrl(notificationCreate.linkUrl())
-                .createdAt(notificationCreate.createdAt())
-                .readAt(notificationCreate.readAt())
-                .updatedAt(notificationCreate.updatedAt())
-                .deletedAt(notificationCreate.deletedAt())
+                .createdAt(now)
                 .build();
     }
 

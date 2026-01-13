@@ -8,11 +8,6 @@ public record NotificationCreate(
         String title,
         String content,
         NotificationType notificationType,
-        NotificationStatus notificationStatus,
-        String linkUrl,
-        Instant createdAt,
-        Instant readAt,
-        Instant updatedAt,
-        Instant deletedAt
+        String linkUrl
 ) {
 }
