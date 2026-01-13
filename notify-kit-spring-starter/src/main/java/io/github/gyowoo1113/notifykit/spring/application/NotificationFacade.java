@@ -1,7 +1,7 @@
 package io.github.gyowoo1113.notifykit.spring.application;
 
 import io.github.gyowoo1113.notifykit.core.domain.Notification;
-import io.github.gyowoo1113.notifykit.core.domain.support.NotificationCommand;
+import io.github.gyowoo1113.notifykit.core.domain.support.NotificationCreate;
 import io.github.gyowoo1113.notifykit.core.service.NotificationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,8 +13,8 @@ public class NotificationFacade {
     private final NotificationService coreService;
 
     @Transactional
-    public Notification create(NotificationCommand command){
-        return coreService.create(command);
+    public Notification create(NotificationCreate create){
+        return coreService.create(create);
     }
 
     @Transactional(readOnly = true)

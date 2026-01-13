@@ -1,23 +1,19 @@
 package io.github.gyowoo1113.notifykit.core.domain;
 
-import io.github.gyowoo1113.notifykit.core.domain.support.NotificationCommand;
+import io.github.gyowoo1113.notifykit.core.domain.support.NotificationCreate;
 import io.github.gyowoo1113.notifykit.core.domain.support.NotificationStatus;
 import io.github.gyowoo1113.notifykit.core.domain.support.NotificationType;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class NotificationTest {
 
     @Test
     public void NotificationCommand_객체로_생성할_수_있다(){
         // given
-        NotificationCommand command = new NotificationCommand(
+        NotificationCreate create = new NotificationCreate(
             10L
                 ,"테스트 알림[제목]"
                 ,"안녕하세요. 내용입니다"
@@ -26,10 +22,11 @@ class NotificationTest {
                 , null
                 , LocalDateTime.now()
                 , LocalDateTime.now()
+                , null
         );
 
         // when
-        Notification notification = Notification.from(command);
+        Notification notification = Notification.from(create);
 
         // then
         Assertions.assertThat(notification.getId()).isNull();

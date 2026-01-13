@@ -1,6 +1,6 @@
 package io.github.gyowoo1113.notifykit.core.domain;
 
-import io.github.gyowoo1113.notifykit.core.domain.support.NotificationCommand;
+import io.github.gyowoo1113.notifykit.core.domain.support.NotificationCreate;
 import io.github.gyowoo1113.notifykit.core.domain.support.NotificationStatus;
 import io.github.gyowoo1113.notifykit.core.domain.support.NotificationType;
 import lombok.Builder;
@@ -19,9 +19,10 @@ public class Notification {
     private final String linkUrl;
     private final LocalDateTime createdAt;
     private final LocalDateTime readAt;
+    private final LocalDateTime deletedAt;
 
     @Builder
-    public Notification(Long id, Long receiverId, String title, String content, NotificationType notificationType, NotificationStatus notificationStatus, String linkUrl, LocalDateTime createdAt, LocalDateTime readAt) {
+    public Notification(Long id, Long receiverId, String title, String content, NotificationType notificationType, NotificationStatus notificationStatus, String linkUrl, LocalDateTime createdAt, LocalDateTime readAt, LocalDateTime deletedAt) {
         this.id = id;
         this.receiverId = receiverId;
         this.title = title;
@@ -31,18 +32,34 @@ public class Notification {
         this.linkUrl = linkUrl;
         this.createdAt = createdAt;
         this.readAt = readAt;
+        this.deletedAt = deletedAt;
     }
 
-    public static Notification from(NotificationCommand notificationCommand){
+    public static Notification from(NotificationCreate notificationCreate){
         return Notification.builder()
-                .receiverId(notificationCommand.receiverId())
-                .title(notificationCommand.title())
-                .content(notificationCommand.content())
-                .notificationType(notificationCommand.notificationType())
-                .notificationStatus(notificationCommand.notificationStatus())
-                .linkUrl(notificationCommand.linkUrl())
-                .createdAt(notificationCommand.createdAt())
-                .readAt(notificationCommand.readAt())
+                .receiverId(notificationCreate.receiverId())
+                .title(notificationCreate.title())
+                .content(notificationCreate.content())
+                .notificationType(notificationCreate.notificationType())
+                .notificationStatus(notificationCreate.notificationStatus())
+                .linkUrl(notificationCreate.linkUrl())
+                .createdAt(notificationCreate.createdAt())
+                .readAt(notificationCreate.readAt())
+                .deletedAt(notificationCreate.deletedAt())
+                .build();
+    }
+
+    public Notification update(NotificationCreate notificationCreate){
+        return Notification.builder()
+                .id(id)
+                .title(title)
+                .content(content)
+                .notificationType(notificationType)
+                .notificationStatus(notificationCreate.notificationStatus())
+                .linkUrl(linkUrl)
+                .createdAt(createdAt)
+                .readAt(notificationCreate.readAt())
+                .deletedAt(deletedAt)
                 .build();
     }
 }
