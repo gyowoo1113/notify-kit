@@ -3,6 +3,7 @@ package io.github.gyowoo1113.notifykit.core.domain;
 import io.github.gyowoo1113.notifykit.core.domain.support.NotificationCreate;
 import io.github.gyowoo1113.notifykit.core.domain.support.NotificationStatus;
 import io.github.gyowoo1113.notifykit.core.domain.support.NotificationType;
+import io.github.gyowoo1113.notifykit.core.domain.support.NotificationUpdate;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -22,7 +23,7 @@ public class Notification {
     private final Instant updatedAt;
     private final Instant deletedAt;
 
-    @Builder
+    @Builder(toBuilder = true)
     public Notification(Long id, Long receiverId, String title, String content, NotificationType notificationType, NotificationStatus notificationStatus, String linkUrl, Instant createdAt, Instant readAt, Instant updatedAt, Instant deletedAt) {
         this.id = id;
         this.receiverId = receiverId;
@@ -53,17 +54,38 @@ public class Notification {
                 .build();
     }
 
-    public Notification update(NotificationCreate notificationCreate){
-        return Notification.builder()
-                .id(id)
-                .title(title)
-                .content(content)
-                .notificationType(notificationType)
-                .notificationStatus(notificationCreate.notificationStatus())
-                .linkUrl(linkUrl)
-                .createdAt(createdAt)
-                .readAt(notificationCreate.readAt())
-                .deletedAt(deletedAt)
+    public Notification update(NotificationUpdate notificationUpdate, Instant now){
+        assertNotDeleted();
+        return this.toBuilder()
+                .title(or(notificationUpdate.title(), this.title))
+                .content(or(notificationUpdate.content(),this.content))
+                .linkUrl(or(notificationUpdate.linkUrl(),this.linkUrl))
+                .updatedAt(now)
+                .build();
+    }
+
+    public Notification markAsRead(Instant now){
+        assertNotDeleted();
+        if (this.notificationStatus == NotificationStatus.READ && this.readAt != null) return this;
+
+        return this.toBuilder()
+                .notificationStatus(NotificationStatus.READ)
+                .readAt(now)
+                .updatedAt(now)
+                .build();
+    }
+
+    public Notification markAsUnread(Instant now){
+        assertNotDeleted();
+        if (this.notificationStatus == NotificationStatus.UNREAD && this.readAt == null) return this;
+
+        return this.toBuilder()
+                .notificationStatus(NotificationStatus.UNREAD)
+                .readAt(null)
+                .updatedAt(now)
+                .build();
+    }
+
                 .build();
     }
 }

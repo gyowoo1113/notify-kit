@@ -2,6 +2,7 @@ package io.github.gyowoo1113.notifykit.spring.application;
 
 import io.github.gyowoo1113.notifykit.core.domain.Notification;
 import io.github.gyowoo1113.notifykit.core.domain.support.NotificationCreate;
+import io.github.gyowoo1113.notifykit.core.domain.support.NotificationUpdate;
 import io.github.gyowoo1113.notifykit.core.service.NotificationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,5 +21,20 @@ public class NotificationFacade {
     @Transactional(readOnly = true)
     public Notification getById(Long id){
         return coreService.getById(id);
+    }
+
+    @Transactional
+    public Notification update(Long id, NotificationUpdate update){
+        return  coreService.update(id,update);
+    }
+
+    @Transactional
+    public Notification markAsRead(Long id){
+        return coreService.markAsRead(id);
+    }
+
+    @Transactional
+    public Notification markAsUnread(Long id){
+        return coreService.markAsUnread(id);
     }
 }
