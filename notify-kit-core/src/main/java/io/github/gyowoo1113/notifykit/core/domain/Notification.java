@@ -42,6 +42,16 @@ public class Notification {
         return newVal != null ? newVal : oldVal;
     }
 
+    private void assertNotDeleted(){
+        if (isDeleted()){
+            throw new IllegalStateException("삭제된 알림은 변경 불가");
+        }
+    }
+
+    public  boolean isDeleted(){
+        return this.notificationStatus == NotificationStatus.DELETED && deletedAt != null;
+    }
+
     public static Notification create(NotificationCreate notificationCreate, Instant now){
         return Notification.builder()
                 .receiverId(notificationCreate.receiverId())
@@ -86,6 +96,12 @@ public class Notification {
                 .build();
     }
 
+    public Notification markAsDeleted(Instant now){
+        if (isDeleted()) return this;
+        return this.toBuilder()
+                .deletedAt(now)
+                .notificationStatus(NotificationStatus.DELETED)
+                .updatedAt(now)
                 .build();
     }
 }

@@ -43,4 +43,10 @@ public class NotificationController {
         Notification notification = facade.markAsUnread(id);
         return ResponseEntity.ok(notification);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id){
+        facade.delete(id);
+        return ResponseEntity.noContent().build();
+    }
 }

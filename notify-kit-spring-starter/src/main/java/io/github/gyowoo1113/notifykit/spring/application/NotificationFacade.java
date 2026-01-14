@@ -37,4 +37,9 @@ public class NotificationFacade {
     public Notification markAsUnread(Long id){
         return coreService.markAsUnread(id);
     }
+
+    @Transactional
+    public void delete(Long id){
+        coreService.delete(id);
+    }
 }

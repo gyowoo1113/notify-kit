@@ -43,4 +43,11 @@ public class NotificationService {
         notification = repository.save(notification);
         return notification;
     }
+
+    public void delete(long id){
+        Notification notification = getById(id);
+        notification = notification.markAsDeleted(Instant.now());
+        notification = repository.save(notification);
+    }
+
 }
