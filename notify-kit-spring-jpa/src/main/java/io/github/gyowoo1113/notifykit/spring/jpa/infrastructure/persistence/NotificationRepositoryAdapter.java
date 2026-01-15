@@ -11,7 +11,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class NotificationRepositoryAdapter implements NotificationRepository {
 
-    private final NotificationJPARepository repository;
+    private final NotificationJpaRepository repository;
 
     @Override
     public Notification save(Notification notification) {

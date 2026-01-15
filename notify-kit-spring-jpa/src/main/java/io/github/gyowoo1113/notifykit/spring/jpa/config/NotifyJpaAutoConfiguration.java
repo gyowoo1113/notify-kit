@@ -3,7 +3,7 @@ package io.github.gyowoo1113.notifykit.spring.jpa.config;
 import io.github.gyowoo1113.notifykit.core.service.port.NotificationRepository;
 import io.github.gyowoo1113.notifykit.spring.config.NotifyAutoConfiguration;
 import io.github.gyowoo1113.notifykit.spring.jpa.infrastructure.persistence.NotificationEntity;
-import io.github.gyowoo1113.notifykit.spring.jpa.infrastructure.persistence.NotificationJPARepository;
+import io.github.gyowoo1113.notifykit.spring.jpa.infrastructure.persistence.NotificationJpaRepository;
 import io.github.gyowoo1113.notifykit.spring.jpa.infrastructure.persistence.NotificationRepositoryAdapter;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
@@ -15,14 +15,14 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @AutoConfiguration
 @ConditionalOnClass(org.springframework.data.jpa.repository.JpaRepository.class)
-@EnableJpaRepositories(basePackageClasses = NotificationJPARepository.class)
+@EnableJpaRepositories(basePackageClasses = NotificationJpaRepository.class)
 @EntityScan(basePackageClasses = NotificationEntity.class)
 @AutoConfigureBefore(NotifyAutoConfiguration.class)
 public class NotifyJpaAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean(NotificationRepository.class)
-    public NotificationRepository notificationRepository(NotificationJPARepository jpaRepository) {
+    public NotificationRepository notificationRepository(NotificationJpaRepository jpaRepository) {
         return new NotificationRepositoryAdapter(jpaRepository);
     }
 }
