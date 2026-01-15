@@ -1,7 +1,6 @@
 package io.github.gyowoo1113.notifykit.core.domain.support;
 
-import java.time.Instant;
-import java.time.LocalDateTime;
+import io.github.gyowoo1113.notifykit.core.exception.ValidationException;
 
 public record NotificationCreate(
         Long receiverId,
@@ -10,4 +9,9 @@ public record NotificationCreate(
         NotificationType notificationType,
         String linkUrl
 ) {
+    public NotificationCreate{
+        if (title == null) {
+            throw new ValidationException("notification", "title", "required");
+        }
+    }
 }

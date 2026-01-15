@@ -18,11 +18,6 @@ class NotificationTest {
                 ,"테스트 알림[제목]"
                 ,"안녕하세요. 내용입니다"
                 , NotificationType.COMMENT
-                , NotificationStatus.UNREAD
-                , null
-                , Instant.now()
-                , Instant.now()
-                , null
                 , null
         );
 

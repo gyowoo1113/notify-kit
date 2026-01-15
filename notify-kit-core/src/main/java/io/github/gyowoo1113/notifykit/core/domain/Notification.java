@@ -4,6 +4,7 @@ import io.github.gyowoo1113.notifykit.core.domain.support.NotificationCreate;
 import io.github.gyowoo1113.notifykit.core.domain.support.NotificationStatus;
 import io.github.gyowoo1113.notifykit.core.domain.support.NotificationType;
 import io.github.gyowoo1113.notifykit.core.domain.support.NotificationUpdate;
+import io.github.gyowoo1113.notifykit.core.exception.ConflictException;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -44,7 +45,7 @@ public class Notification {
 
     private void assertNotDeleted(){
         if (isDeleted()){
-            throw new IllegalStateException("삭제된 알림은 변경 불가");
+            throw new ConflictException("notification", "deleted");
         }
     }
 

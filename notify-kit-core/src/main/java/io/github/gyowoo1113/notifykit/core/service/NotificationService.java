@@ -3,6 +3,7 @@ package io.github.gyowoo1113.notifykit.core.service;
 import io.github.gyowoo1113.notifykit.core.domain.Notification;
 import io.github.gyowoo1113.notifykit.core.domain.support.NotificationCreate;
 import io.github.gyowoo1113.notifykit.core.domain.support.NotificationUpdate;
+import io.github.gyowoo1113.notifykit.core.exception.ResourceNotFoundException;
 import io.github.gyowoo1113.notifykit.core.service.port.NotificationRepository;
 import lombok.RequiredArgsConstructor;
 
@@ -19,8 +20,12 @@ public class NotificationService {
     }
 
     public Notification getById(long id){
-        // TODO : add ResourceNotFoundException
-        return repository.getById(id).orElseThrow();
+        Notification notification = repository.getById(id)
+                .orElseThrow(() -> notFound(id));
+
+        assertVisible(notification,id);
+
+        return notification;
     }
 
     public Notification update(long id, NotificationUpdate notificationUpdate){
@@ -45,9 +50,21 @@ public class NotificationService {
     }
 
     public void delete(long id){
-        Notification notification = getById(id);
+        Notification notification = repository.getById(id)
+                .orElseThrow(() -> notFound(id));
+        if (notification.isDeleted()) return;
+
         notification = notification.markAsDeleted(Instant.now());
-        notification = repository.save(notification);
+        repository.save(notification);
     }
 
+    private ResourceNotFoundException notFound(long id){
+        return new ResourceNotFoundException("notification", String.valueOf(id));
+    }
+
+    private void assertVisible(Notification notification, long id){
+        if (notification.isDeleted()){
+            throw notFound(id);
+        }
+    }
 }
