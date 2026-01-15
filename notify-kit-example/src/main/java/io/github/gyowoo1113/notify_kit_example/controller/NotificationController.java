@@ -3,7 +3,9 @@ package io.github.gyowoo1113.notify_kit_example.controller;
 import io.github.gyowoo1113.notifykit.core.domain.Notification;
 import io.github.gyowoo1113.notifykit.core.domain.support.NotificationCreate;
 import io.github.gyowoo1113.notifykit.core.domain.support.NotificationUpdate;
+import io.github.gyowoo1113.notifykit.core.support.PageRequestSpec;
 import io.github.gyowoo1113.notifykit.core.support.PageResult;
+import io.github.gyowoo1113.notifykit.spring.api.request.NotificationListRequest;
 import io.github.gyowoo1113.notifykit.spring.api.response.NotificationResponse;
 import io.github.gyowoo1113.notifykit.spring.application.NotificationFacade;
 import lombok.RequiredArgsConstructor;
@@ -29,13 +31,10 @@ public class NotificationController {
     }
 
     @GetMapping("/list")
-    public PageResult<Notification> list(
-            @RequestParam Long receiverId,
-            @RequestParam(required = false) NotificationStatus status,
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "5") int size
-    ) {
-        return facade.list(receiverId, status, page, size);
+    public PageResult<NotificationResponse> list(@ModelAttribute NotificationListRequest request) {
+        PageRequestSpec spec = request.toPageSpec(5, 50);
+        PageResult<Notification> result = facade.list(request.receiverIdRequired(), request.status(), spec.page(), spec.size());
+        return result.map(NotificationResponse::from);
     }
 
     @PatchMapping("/{id}")
