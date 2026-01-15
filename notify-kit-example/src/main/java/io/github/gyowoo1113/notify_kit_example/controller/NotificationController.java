@@ -2,9 +2,9 @@ package io.github.gyowoo1113.notify_kit_example.controller;
 
 import io.github.gyowoo1113.notifykit.core.domain.Notification;
 import io.github.gyowoo1113.notifykit.core.domain.support.NotificationCreate;
-import io.github.gyowoo1113.notifykit.core.domain.support.NotificationStatus;
 import io.github.gyowoo1113.notifykit.core.domain.support.NotificationUpdate;
 import io.github.gyowoo1113.notifykit.core.support.PageResult;
+import io.github.gyowoo1113.notifykit.spring.api.response.NotificationResponse;
 import io.github.gyowoo1113.notifykit.spring.application.NotificationFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,15 +17,15 @@ public class NotificationController {
     private final NotificationFacade facade;
 
     @PostMapping
-    public ResponseEntity<Notification> create(@RequestBody NotificationCreate notificationCreate) {
+    public ResponseEntity<NotificationResponse> create(@RequestBody NotificationCreate notificationCreate) {
         Notification saved = facade.create(notificationCreate);
-        return ResponseEntity.ok(saved);
+        return ResponseEntity.ok(NotificationResponse.from(saved));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Notification> get(@PathVariable Long id) {
+    public ResponseEntity<NotificationResponse> get(@PathVariable Long id) {
         Notification notification = facade.getById(id);
-        return ResponseEntity.ok(notification);
+        return ResponseEntity.ok(NotificationResponse.from(notification));
     }
 
     @GetMapping("/list")
@@ -38,23 +38,22 @@ public class NotificationController {
         return facade.list(receiverId, status, page, size);
     }
 
-
     @PatchMapping("/{id}")
-    public ResponseEntity<Notification> update(@PathVariable Long id, @RequestBody NotificationUpdate notificationUpdate) {
+    public ResponseEntity<NotificationResponse> update(@PathVariable Long id, @RequestBody NotificationUpdate notificationUpdate) {
         Notification notification = facade.update(id, notificationUpdate);
-        return ResponseEntity.ok(notification);
+        return ResponseEntity.ok(NotificationResponse.from(notification));
     }
 
     @PatchMapping("/{id}/read")
-    public ResponseEntity<Notification> markAsRead(@PathVariable Long id) {
+    public ResponseEntity<NotificationResponse> markAsRead(@PathVariable Long id) {
         Notification notification = facade.markAsRead(id);
-        return ResponseEntity.ok(notification);
+        return ResponseEntity.ok(NotificationResponse.from(notification));
     }
 
     @PatchMapping("/{id}/unread")
-    public ResponseEntity<Notification> markAsUnread(@PathVariable Long id) {
+    public ResponseEntity<NotificationResponse> markAsUnread(@PathVariable Long id) {
         Notification notification = facade.markAsUnread(id);
-        return ResponseEntity.ok(notification);
+        return ResponseEntity.ok(NotificationResponse.from(notification));
     }
 
     @DeleteMapping("/{id}")
