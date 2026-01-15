@@ -2,9 +2,11 @@ package io.github.gyowoo1113.notifykit.core.service;
 
 import io.github.gyowoo1113.notifykit.core.domain.Notification;
 import io.github.gyowoo1113.notifykit.core.domain.support.NotificationCreate;
+import io.github.gyowoo1113.notifykit.core.domain.support.NotificationStatus;
 import io.github.gyowoo1113.notifykit.core.domain.support.NotificationUpdate;
 import io.github.gyowoo1113.notifykit.core.exception.ResourceNotFoundException;
 import io.github.gyowoo1113.notifykit.core.service.port.NotificationRepository;
+import io.github.gyowoo1113.notifykit.core.support.PageResult;
 import lombok.RequiredArgsConstructor;
 
 import java.time.Instant;
@@ -26,6 +28,10 @@ public class NotificationService {
         assertVisible(notification,id);
 
         return notification;
+    }
+
+    public PageResult<Notification> list(long receiverId, NotificationStatus status, int page, int size){
+        return repository.list(receiverId, status, page, size);
     }
 
     public Notification update(long id, NotificationUpdate notificationUpdate){
