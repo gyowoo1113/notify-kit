@@ -12,4 +12,5 @@ public interface NotificationRepository {
     Optional<Notification> getById(long id);
     PageResult<Notification> list(long receiverId, NotificationStatus status, int page, int size);
     CursorPage<Notification> listCursor(long receiverId, NotificationStatus status, Long cursor, int size);
+    long countUnread(long receiverId);
 }

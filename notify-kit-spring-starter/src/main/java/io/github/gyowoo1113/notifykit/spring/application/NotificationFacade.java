@@ -36,6 +36,11 @@ public class NotificationFacade {
         return coreService.listCursor(receiverId, status, cursor, size);
     }
 
+    @Transactional(readOnly = true)
+    public long countUnread(long receiverId){
+        return coreService.countUnread(receiverId);
+    }
+
     @Transactional
     public Notification update(Long id, NotificationUpdate update) {
         return coreService.update(id, update);

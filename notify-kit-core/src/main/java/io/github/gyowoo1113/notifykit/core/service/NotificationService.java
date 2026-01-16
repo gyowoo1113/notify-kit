@@ -39,6 +39,10 @@ public class NotificationService {
         return repository.listCursor(receiverId, status, cursor, size);
     }
 
+    public long countUnread(long receiverId){
+        return repository.countUnread(receiverId);
+    }
+
     public Notification update(long id, NotificationUpdate notificationUpdate){
         Notification notification = getById(id);
         notification = notification.update(notificationUpdate, Instant.now());

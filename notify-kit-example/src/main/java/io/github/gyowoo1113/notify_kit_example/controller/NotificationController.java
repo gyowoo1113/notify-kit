@@ -9,6 +9,7 @@ import io.github.gyowoo1113.notifykit.core.support.PageRequestSpec;
 import io.github.gyowoo1113.notifykit.core.support.PageResult;
 import io.github.gyowoo1113.notifykit.spring.api.request.NotificationListRequest;
 import io.github.gyowoo1113.notifykit.spring.api.response.NotificationResponse;
+import io.github.gyowoo1113.notifykit.spring.api.response.UnreadCountResponse;
 import io.github.gyowoo1113.notifykit.spring.application.NotificationFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -48,6 +49,13 @@ public class NotificationController {
     ) {
         CursorPage<Notification> result = facade.listCursor(receiverId, status, cursor, size);
         return result.map(NotificationResponse::from);
+    }
+
+    @GetMapping("/unread-count/{receiverId}")
+    public ResponseEntity<UnreadCountResponse> countUnread(@PathVariable Long receiverId) {
+        return ResponseEntity.ok(
+                new UnreadCountResponse(facade.countUnread(receiverId))
+        );
     }
 
     @PatchMapping("/{id}")

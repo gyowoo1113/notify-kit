@@ -81,4 +81,19 @@ public class NotificationRepositoryAdapter implements NotificationRepository {
         return new CursorPage<>(items,nextCursor,hasNext);
     }
 
+    @Override
+    public long countUnread(long receiverId) {
+        QNotificationEntity entity = QNotificationEntity.notificationEntity;
+        Long count = jpaQueryFactory
+                .select(entity.count())
+                .from(entity)
+                .where(
+                        entity.receiverId.eq(receiverId),
+                        entity.notificationStatus.eq(NotificationStatus.UNREAD),
+                        entity.deletedAt.isNull()
+                )
+                .fetchOne();
+
+        return Optional.ofNullable(count).orElse(0L);
+    }
 }
