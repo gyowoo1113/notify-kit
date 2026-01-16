@@ -5,6 +5,7 @@ import io.github.gyowoo1113.notifykit.core.domain.support.NotificationCreate;
 import io.github.gyowoo1113.notifykit.core.domain.support.NotificationStatus;
 import io.github.gyowoo1113.notifykit.core.domain.support.NotificationUpdate;
 import io.github.gyowoo1113.notifykit.core.service.NotificationService;
+import io.github.gyowoo1113.notifykit.core.support.CursorPage;
 import io.github.gyowoo1113.notifykit.core.support.PageResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -28,6 +29,11 @@ public class NotificationFacade {
     @Transactional(readOnly = true)
     public PageResult<Notification> list(Long receiverId, NotificationStatus status, int page, int size) {
         return coreService.list(receiverId, status, page, size);
+    }
+
+    @Transactional(readOnly = true)
+    public CursorPage<Notification> listCursor(Long receiverId, NotificationStatus status, Long cursor, int size) {
+        return coreService.listCursor(receiverId, status, cursor, size);
     }
 
     @Transactional

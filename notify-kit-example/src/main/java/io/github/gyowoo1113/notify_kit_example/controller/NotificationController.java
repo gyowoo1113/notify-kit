@@ -2,7 +2,9 @@ package io.github.gyowoo1113.notify_kit_example.controller;
 
 import io.github.gyowoo1113.notifykit.core.domain.Notification;
 import io.github.gyowoo1113.notifykit.core.domain.support.NotificationCreate;
+import io.github.gyowoo1113.notifykit.core.domain.support.NotificationStatus;
 import io.github.gyowoo1113.notifykit.core.domain.support.NotificationUpdate;
+import io.github.gyowoo1113.notifykit.core.support.CursorPage;
 import io.github.gyowoo1113.notifykit.core.support.PageRequestSpec;
 import io.github.gyowoo1113.notifykit.core.support.PageResult;
 import io.github.gyowoo1113.notifykit.spring.api.request.NotificationListRequest;
@@ -30,10 +32,21 @@ public class NotificationController {
         return ResponseEntity.ok(NotificationResponse.from(notification));
     }
 
-    @GetMapping("/list")
+    @GetMapping
     public PageResult<NotificationResponse> list(@ModelAttribute NotificationListRequest request) {
         PageRequestSpec spec = request.toPageSpec(5, 50);
         PageResult<Notification> result = facade.list(request.receiverIdRequired(), request.status(), spec.page(), spec.size());
+        return result.map(NotificationResponse::from);
+    }
+
+    @GetMapping("/cursor")
+    public CursorPage<NotificationResponse> listCursor(
+            @RequestParam long receiverId,
+            @RequestParam(required = false) NotificationStatus status,
+            @RequestParam(required = false) Long cursor,
+            @RequestParam(defaultValue = "5") int size
+    ) {
+        CursorPage<Notification> result = facade.listCursor(receiverId, status, cursor, size);
         return result.map(NotificationResponse::from);
     }
 

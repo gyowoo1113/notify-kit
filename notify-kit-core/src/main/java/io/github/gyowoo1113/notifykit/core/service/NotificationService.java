@@ -6,6 +6,7 @@ import io.github.gyowoo1113.notifykit.core.domain.support.NotificationStatus;
 import io.github.gyowoo1113.notifykit.core.domain.support.NotificationUpdate;
 import io.github.gyowoo1113.notifykit.core.exception.ResourceNotFoundException;
 import io.github.gyowoo1113.notifykit.core.service.port.NotificationRepository;
+import io.github.gyowoo1113.notifykit.core.support.CursorPage;
 import io.github.gyowoo1113.notifykit.core.support.PageResult;
 import lombok.RequiredArgsConstructor;
 
@@ -32,6 +33,10 @@ public class NotificationService {
 
     public PageResult<Notification> list(long receiverId, NotificationStatus status, int page, int size){
         return repository.list(receiverId, status, page, size);
+    }
+
+    public CursorPage<Notification> listCursor(long receiverId, NotificationStatus status, Long cursor, int size){
+        return repository.listCursor(receiverId, status, cursor, size);
     }
 
     public Notification update(long id, NotificationUpdate notificationUpdate){
