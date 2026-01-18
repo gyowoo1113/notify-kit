@@ -1,3 +1,7 @@
 spring:
   application:
     name: notify-kit-spring-starter
+
+notify:
+  sse:
+    enabled: true
