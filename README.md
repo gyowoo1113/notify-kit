@@ -52,7 +52,7 @@ Spring 환경에 종속되지 않은 core 모듈과 Spring Boot AutoConfiguratio
 - [전체 모듈 및 패키지 구조](/docs/architecture/layout.md)
 - [NotificationEventPublisher & 이벤트 처리 구조](/docs/architecture/NotificationEventPublisher_&_이벤트_처리_구조.md)
 - [ApplicationEventPublisher vs NotificationEventPublisher](/docs/architecture/ApplicationEventPublisher_vs_NotificationEventPublisher.md)
-- [페이징 설계]
+- [페이징 설계](/docs/architecture/페이징%20설계.md)
 
 ### Design Decisions (Why)
 
