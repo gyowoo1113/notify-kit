@@ -7,6 +7,7 @@ import io.github.gyowoo1113.notifykit.core.domain.support.NotificationUpdate;
 import io.github.gyowoo1113.notifykit.core.service.NotificationService;
 import io.github.gyowoo1113.notifykit.core.support.CursorPage;
 import io.github.gyowoo1113.notifykit.core.support.PageResult;
+import io.github.gyowoo1113.notifykit.spring.infrastructure.delivery.event.NotificationEventPublisher;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,10 +16,13 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class NotificationFacade {
     private final NotificationService coreService;
+    private final NotificationEventPublisher eventPublisher;
 
     @Transactional
     public Notification create(NotificationCreate create) {
-        return coreService.create(create);
+        Notification saved = coreService.create(create);
+        eventPublisher.publishCreated(saved);
+        return saved;
     }
 
     @Transactional(readOnly = true)
