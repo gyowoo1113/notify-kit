@@ -11,7 +11,13 @@ public class SseEmitterRegistry {
     private final ConcurrentHashMap<Long, SseEmitter> emitters = new ConcurrentHashMap<>();
 
     public SseEmitter save(Long receiverId, SseEmitter emitter) {
-        emitters.put(receiverId, emitter);
+        SseEmitter old = emitters.put(receiverId, emitter);
+        if (old != null) {
+            try {
+                old.complete();
+            } catch (Exception ignored) {
+            }
+        }
         return emitter;
     }
 
