@@ -28,3 +28,7 @@ springdoc:
     path: /swagger-ui
 
 debug : true
+
+notify:
+  sse:
+    enabled: true

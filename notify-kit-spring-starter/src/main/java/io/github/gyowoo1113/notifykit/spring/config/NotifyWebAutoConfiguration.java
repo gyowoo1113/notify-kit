@@ -2,6 +2,7 @@ package io.github.gyowoo1113.notifykit.spring.config;
 
 import io.github.gyowoo1113.notifykit.spring.infrastructure.delivery.advice.ExceptionControllerAdvice;
 import io.github.gyowoo1113.notifykit.spring.infrastructure.delivery.event.NoopNotificationEventPublisher;
+import io.github.gyowoo1113.notifykit.spring.infrastructure.delivery.event.NotificationCreatedEventListener;
 import io.github.gyowoo1113.notifykit.spring.infrastructure.delivery.event.NotificationEventPublisher;
 import io.github.gyowoo1113.notifykit.spring.infrastructure.delivery.sse.SseEmitterRegistry;
 import io.github.gyowoo1113.notifykit.spring.infrastructure.delivery.sse.SseNotificationEventPublisher;
@@ -27,6 +28,7 @@ public class NotifyWebAutoConfiguration {
     }
 
     @Bean
+    @ConditionalOnProperty(name = "notify.sse.enabled", havingValue = "false", matchIfMissing = true)
     @ConditionalOnMissingBean(NotificationEventPublisher.class)
     public NotificationEventPublisher noopNotificationEventPublisher() {
         return new NoopNotificationEventPublisher();
@@ -36,6 +38,12 @@ public class NotifyWebAutoConfiguration {
     @ConditionalOnProperty(name = "notify.sse.enabled", havingValue = "true")
     public NotificationEventPublisher sseNotificationEventPublisher(SseEmitterRegistry registry) {
         return new SseNotificationEventPublisher(registry);
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
+    public NotificationCreatedEventListener notificationCreatedEventListener(NotificationEventPublisher publisher){
+        return new NotificationCreatedEventListener(publisher);
     }
 
     @Bean
