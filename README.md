@@ -1,11 +1,9 @@
 ## Project Overview
 
 **notify-kit**은
-알림 도메인의 **생성 · 저장 · 조회 · 읽음 처리 · 실시간 전송(SSE)** 흐름을
-**라이브러리 형태로 재사용 가능**하도록 설계한 백엔드 중심 모듈이다.
+알림 도메인의 **생성 · 저장 · 조회 · 읽음 처리 · 실시간 전송(SSE)** 흐름을 **라이브러리 형태로 재사용 가능**하게 제공하는 백엔드 중심 모듈이다.
 
-Spring 환경에 종속되지 않은 core 모듈과 Spring Boot AutoConfiguration 기반의 starter 모듈을 분리하여,
-여러 프로젝트에서 **최소한의 설정으로 알림 기능을 적용**하는 것을 목표로 한다.
+Spring 환경에 종속되지 않은 core 모듈과 Spring Boot AutoConfiguration 기반의 starter 모듈을 분리하여, 여러 프로젝트에서 **최소한의 설정으로 알림 기능을 적용**하는 것을 목표로 한다.
 
 ------
 
@@ -20,13 +18,19 @@ Spring 환경에 종속되지 않은 core 모듈과 Spring Boot AutoConfiguratio
 
 ## Core Features (Implemented)
 
-- 알림 생성 / 단건 조회 / 목록 조회 / 읽음 처리
+- 알림 생성/단건/목록/읽음 처리
 - Page 기반 페이징 + Cursor(No-Offset) 확장 구조
-- Spring Event + `AFTER_COMMIT` 기반 알림 전송 트리거
-- SSE(Server-Sent Events) 기반 실시간 알림 전송 (옵션)
-- 전송 비활성화를 위한 Noop 구현체 제공
+- Spring Event + `AFTER_COMMIT` 기반 전송 트리거
 - Spring Boot AutoConfiguration 기반 손쉬운 적용
 - core 모듈의 Spring/JPA 의존성 제거
+
+## SSE Features (Implemented)
+
+- SSE(Server-Sent Events) 실시간 전송(옵션: `notify.sse.enabled=true`)
+- 한 사용자 다중 연결 지원(탭/기기 동시 접속)
+- 연결 종료/에러 처리 및 전송 실패 시 해당 연결 제거
+- 사용자당 연결 수 제한 + Conflict 예외 매핑
+- 전송 비활성화를 위한 Noop publisher 제공
 
 ------
 
@@ -44,38 +48,26 @@ Spring 환경에 종속되지 않은 core 모듈과 Spring Boot AutoConfiguratio
 
 ------
 
-## Roadmap (Planned)
+## Roadmap (Focus)
 
-### 1) SSE 실사용 품질 개선
+- **SSE 재연결 유실 방지**
+  - event `id` 포함 + `Last-Event-ID` 기반 최근 N개 재전송(메모리/TTL)
+- **Outbox 기반 신뢰성 전송**
+  - outbox 저장 → 워커 전송 → 재시도/중복방지(eventId)
+  - 전송 결과(성공/실패/사유) 기록 포함
 
-- 한 사용자 다중 연결 지원 (여러 탭/여러 기기 동시 접속)
-- 연결 유지용 `ping` 이벤트 전송 (idle timeout 완화)
-- 끊김 재연결 시 최근 이벤트 일부 재전송 지원
-    - 서버가 이벤트에 `id` 포함
-    - `Last-Event-ID`가 있으면 최근 N개 범위에서 재전송
-- 서버 재시작으로 재전송 캐시가 사라질 수 있음
-    - 누락 알림은 목록 조회 API로 복구하는 방식 유지
+### Notes / Limitations
 
-### 2) 전송 결과 기록 (Delivery Log)
+- `Last-Event-ID` 기반 재전송을 통해 유실을 완화할 예정
+  - → 초기 구현은 **메모리 캐시 기반**으로, 서버 재시작 시 재전송 범위는 제한됨
+  - → **완전한 전달 보장은 Outbox 단계에서 해결**
 
-- 알림 전송 성공/실패 기록
-- 실패 원인(예외 메시지/코드) 기록
-- 재시도 횟수/마지막 시도 시간 기록
-- 운영 확인을 위한 최소 조회 API 또는 로그 출력 추가
+### Later (Optional)
 
-### 3) 신뢰성 강화 (Outbox 기반)
-
-- 알림 저장 트랜잭션과 전송을 분리
-- 커밋 이후 전송을 보장하는 전송 큐(outbox) 저장
-- 실패 시 재시도 정책 적용
-- 중복 전송 방지(eventId 기준) 처리
-
-### 4) 확장 옵션 (Later)
-
-- Idempotency Key 기반 중복 생성 방지 (선택)
-- 멀티테넌시 격리(tenantId/projectKey) 지원 (선택)
-- 전송 채널 확장 (FCM / WebSocket 등) (선택)
-
+- 연결 유지 ping 이벤트
+- Idempotency Key 기반 중복 생성 방지
+- 멀티테넌시(tenantId/projectKey)
+- 채널 확장(FCM/WebSocket)
 ------
 
 ## Docs
