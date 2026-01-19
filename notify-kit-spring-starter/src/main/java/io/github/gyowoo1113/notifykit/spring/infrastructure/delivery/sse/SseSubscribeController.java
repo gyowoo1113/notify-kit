@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 @RestController
-@RequestMapping("/notification")
+@RequestMapping("/notification/sse")
 @RequiredArgsConstructor
 public class SseSubscribeController {
     private final SseEmitterRegistry registry;
@@ -27,8 +27,8 @@ public class SseSubscribeController {
 
         try {
             emitter.send(SseEmitter.event().name("connected").data("ok"));
-        } catch (Exception e){
-            registry.remove(receiverId);
+        } catch (Exception ignored){
+
         }
 
         return emitter;
