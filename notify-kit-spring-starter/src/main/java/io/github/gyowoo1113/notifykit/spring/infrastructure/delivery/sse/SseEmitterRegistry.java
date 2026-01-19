@@ -1,21 +1,27 @@
 package io.github.gyowoo1113.notifykit.spring.infrastructure.delivery.sse;
 
+import io.github.gyowoo1113.notifykit.core.exception.ConflictException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import java.util.Map;
-import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Slf4j
 @Component
 public class SseEmitterRegistry {
+    private static final int MAX_CONNECTIONS_PER_USER = 3;
     private final ConcurrentHashMap<Long, ConcurrentHashMap<String, SseEmitter>> emitters = new ConcurrentHashMap<>();
 
     public SseEmitter save(Long receiverId, String connectionId, SseEmitter emitter) {
-        emitters.computeIfAbsent(receiverId, k -> new ConcurrentHashMap<>())
-                .put(connectionId, emitter);
+        ConcurrentHashMap<String, SseEmitter> conn = emitters.computeIfAbsent(receiverId, k -> new ConcurrentHashMap<>());
+
+        if (conn.size() >= MAX_CONNECTIONS_PER_USER) {
+            throw new ConflictException("sse", "connection_limit");
+        }
+
+        conn.put(connectionId, emitter);
         return emitter;
     }
 
