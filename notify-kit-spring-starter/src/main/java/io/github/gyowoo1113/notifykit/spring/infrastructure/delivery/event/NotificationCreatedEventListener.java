@@ -1,5 +1,6 @@
 package io.github.gyowoo1113.notifykit.spring.infrastructure.delivery.event;
 
+import io.github.gyowoo1113.notifykit.core.service.port.NotificationEventPublisher;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.event.TransactionPhase;
 import org.springframework.transaction.event.TransactionalEventListener;

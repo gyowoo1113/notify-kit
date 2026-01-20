@@ -8,7 +8,6 @@ import io.github.gyowoo1113.notifykit.core.service.NotificationService;
 import io.github.gyowoo1113.notifykit.core.support.CursorPage;
 import io.github.gyowoo1113.notifykit.core.support.PageResult;
 import io.github.gyowoo1113.notifykit.spring.infrastructure.delivery.event.NotificationCreatedEvent;
-import io.github.gyowoo1113.notifykit.spring.infrastructure.delivery.event.NotificationEventPublisher;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
