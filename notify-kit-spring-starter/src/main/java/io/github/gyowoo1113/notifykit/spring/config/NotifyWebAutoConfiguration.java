@@ -70,7 +70,7 @@ public class NotifyWebAutoConfiguration {
 
     @Bean
     @ConditionalOnProperty(name = "notify.sse.enabled", havingValue = "true")
-    public SseSubscribeController sseSubscribeController(SseEmitterRegistry registry) {
-        return new SseSubscribeController(registry);
+    public SseSubscribeController sseSubscribeController(SseEmitterRegistry registry, RecentEventStore recentEventStore) {
+        return new SseSubscribeController(registry, recentEventStore);
     }
 }
