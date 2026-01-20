@@ -42,6 +42,14 @@ public class SseEmitterRegistry {
     }
 
     public boolean send(Long receiverId, String eventName, Object data) {
+        return send(receiverId, null, eventName, data);
+    }
+
+    public boolean send(Long receiverId, long eventId, String eventName, Object data) {
+        return send(receiverId, String.valueOf(eventId), eventName, data);
+    }
+
+    private boolean send(Long receiverId, String eventId, String eventName, Object data) {
         Map<String, SseEmitter> conn = emitters.get(receiverId);
         if (conn == null || conn.isEmpty()) return false;
 
@@ -50,7 +58,7 @@ public class SseEmitterRegistry {
             String connectionId = entry.getKey();
             SseEmitter emitter = entry.getValue();
             try {
-                emitter.send(SseEmitter.event().name(eventName).data(data));
+                emitter.send(buildEvent(eventName, data, eventId));
                 isSend = true;
             } catch (Exception e) {
                 remove(receiverId, connectionId);
@@ -59,5 +67,10 @@ public class SseEmitterRegistry {
         }
 
         return isSend;
+    }
+
+    private SseEmitter.SseEventBuilder buildEvent(String eventName, Object data, String eventId) {
+        SseEmitter.SseEventBuilder builder = SseEmitter.event().name(eventName).data(data);
+        return (eventId == null || eventId.isBlank()) ? builder : builder.id(eventId);
     }
 }
