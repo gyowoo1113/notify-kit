@@ -1,5 +1,7 @@
 package io.github.gyowoo1113.notifykit.spring.config;
 
+import io.github.gyowoo1113.notifykit.core.service.port.RecentEventStore;
+import io.github.gyowoo1113.notifykit.core.service.port.noop.RecentNoopEventStore;
 import io.github.gyowoo1113.notifykit.spring.infrastructure.delivery.advice.ExceptionControllerAdvice;
 import io.github.gyowoo1113.notifykit.core.service.port.noop.NoopNotificationEventPublisher;
 import io.github.gyowoo1113.notifykit.spring.infrastructure.delivery.event.NotificationCreatedEventListener;
@@ -21,6 +23,26 @@ public class NotifyWebAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
+    public AtomicEventIdGenerator atomicEventIdGenerator() {
+        return new AtomicEventIdGenerator();
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
+    @ConditionalOnProperty(name = "notify.sse.enabled", havingValue = "false", matchIfMissing = true)
+    public RecentEventStore recentNoopEventStore() {
+        return new RecentNoopEventStore();
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
+    @ConditionalOnProperty(name = "notify.sse.enabled", havingValue = "true")
+    public RecentEventStore recentSseEventStore() {
+        return new RecentSseEventStore();
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
     public SseEmitterRegistry sseEmitterRegistry(){
         return new SseEmitterRegistry();
     }
@@ -34,8 +56,10 @@ public class NotifyWebAutoConfiguration {
 
     @Bean
     @ConditionalOnProperty(name = "notify.sse.enabled", havingValue = "true")
-    public NotificationEventPublisher sseNotificationEventPublisher(SseEmitterRegistry registry) {
-        return new SseNotificationEventPublisher(registry);
+    public NotificationEventPublisher sseNotificationEventPublisher(SseEmitterRegistry registry,
+                                                                    RecentEventStore recentEventStore,
+                                                                    AtomicEventIdGenerator eventIdGenerator) {
+        return new SseNotificationEventPublisher(registry, recentEventStore, eventIdGenerator);
     }
 
     @Bean
