@@ -22,13 +22,7 @@ public class RecentSseEventStore implements RecentEventStore {
         Deque<SseEvent> dq = store.computeIfAbsent(receiverId, k -> new ConcurrentLinkedDeque<>());
 
         dq.addLast(event);
-
-        while (true){
-            SseEvent oldSseEvent = dq.peekFirst();
-            if (oldSseEvent == null) break;
-            if (now - oldSseEvent.createdAtEpochMs()  <= TTL_MS) break;
-            dq.pollFirst();
-        }
+        purgeExpired(dq,now);
 
         while (dq.size() > RECENT_NUM) dq.pollFirst();
     }
@@ -37,6 +31,15 @@ public class RecentSseEventStore implements RecentEventStore {
     public List<SseEvent> findAfter(long receiverId, String lastEventId, int limit) {
         return null;
     }
-    
 
+    public void purgeExpired(Deque<SseEvent> dq, long now){
+        while (isPurge(dq.peekFirst(), now)){
+            dq.pollFirst();
+        }
+    }
+
+    public boolean isPurge(SseEvent event, long now){
+        if (event == null) return false;
+        return now - event.createdAtEpochMs() > TTL_MS;
+    }
 }
