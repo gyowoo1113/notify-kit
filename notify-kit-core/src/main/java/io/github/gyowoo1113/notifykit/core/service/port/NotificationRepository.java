@@ -1,7 +1,7 @@
 package io.github.gyowoo1113.notifykit.core.service.port;
 
-import io.github.gyowoo1113.notifykit.core.domain.Notification;
-import io.github.gyowoo1113.notifykit.core.domain.support.NotificationStatus;
+import io.github.gyowoo1113.notifykit.core.domain.notification.Notification;
+import io.github.gyowoo1113.notifykit.core.domain.notification.NotificationStatus;
 import io.github.gyowoo1113.notifykit.core.support.CursorPage;
 import io.github.gyowoo1113.notifykit.core.support.PageResult;
 

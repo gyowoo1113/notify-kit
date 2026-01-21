@@ -1,6 +1,6 @@
 package io.github.gyowoo1113.notifykit.spring.api.request;
 
-import io.github.gyowoo1113.notifykit.core.domain.support.NotificationStatus;
+import io.github.gyowoo1113.notifykit.core.domain.notification.NotificationStatus;
 import io.github.gyowoo1113.notifykit.core.exception.ValidationException;
 import io.github.gyowoo1113.notifykit.core.support.PageRequestSpec;
 

@@ -1,4 +1,4 @@
-package io.github.gyowoo1113.notifykit.core.domain;
+package io.github.gyowoo1113.notifykit.core.domain.event;
 
 public record SseEvent(
         long eventId,

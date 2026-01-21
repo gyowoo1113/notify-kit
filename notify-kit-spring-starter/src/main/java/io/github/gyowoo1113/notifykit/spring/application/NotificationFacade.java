@@ -1,9 +1,9 @@
 package io.github.gyowoo1113.notifykit.spring.application;
 
-import io.github.gyowoo1113.notifykit.core.domain.Notification;
-import io.github.gyowoo1113.notifykit.core.domain.support.NotificationCreate;
-import io.github.gyowoo1113.notifykit.core.domain.support.NotificationStatus;
-import io.github.gyowoo1113.notifykit.core.domain.support.NotificationUpdate;
+import io.github.gyowoo1113.notifykit.core.domain.notification.Notification;
+import io.github.gyowoo1113.notifykit.core.domain.notification.NotificationCreate;
+import io.github.gyowoo1113.notifykit.core.domain.notification.NotificationStatus;
+import io.github.gyowoo1113.notifykit.core.domain.notification.NotificationUpdate;
 import io.github.gyowoo1113.notifykit.core.service.NotificationService;
 import io.github.gyowoo1113.notifykit.core.support.CursorPage;
 import io.github.gyowoo1113.notifykit.core.support.PageResult;

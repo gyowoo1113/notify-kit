@@ -1,9 +1,5 @@
-package io.github.gyowoo1113.notifykit.core.domain;
+package io.github.gyowoo1113.notifykit.core.domain.notification;
 
-import io.github.gyowoo1113.notifykit.core.domain.support.NotificationCreate;
-import io.github.gyowoo1113.notifykit.core.domain.support.NotificationStatus;
-import io.github.gyowoo1113.notifykit.core.domain.support.NotificationType;
-import io.github.gyowoo1113.notifykit.core.domain.support.NotificationUpdate;
 import io.github.gyowoo1113.notifykit.core.exception.ConflictException;
 import lombok.Builder;
 import lombok.Getter;

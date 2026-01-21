@@ -1,8 +1,9 @@
 package io.github.gyowoo1113.notifykit.core.domain;
 
-import io.github.gyowoo1113.notifykit.core.domain.support.NotificationCreate;
-import io.github.gyowoo1113.notifykit.core.domain.support.NotificationStatus;
-import io.github.gyowoo1113.notifykit.core.domain.support.NotificationType;
+import io.github.gyowoo1113.notifykit.core.domain.notification.Notification;
+import io.github.gyowoo1113.notifykit.core.domain.notification.NotificationCreate;
+import io.github.gyowoo1113.notifykit.core.domain.notification.NotificationStatus;
+import io.github.gyowoo1113.notifykit.core.domain.notification.NotificationType;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 

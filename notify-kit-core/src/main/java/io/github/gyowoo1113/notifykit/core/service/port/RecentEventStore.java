@@ -1,6 +1,6 @@
 package io.github.gyowoo1113.notifykit.core.service.port;
 
-import io.github.gyowoo1113.notifykit.core.domain.SseEvent;
+import io.github.gyowoo1113.notifykit.core.domain.event.SseEvent;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package io.github.gyowoo1113.notifykit.core.domain.support;
+package io.github.gyowoo1113.notifykit.core.domain.notification;
 
 import java.time.Instant;
 

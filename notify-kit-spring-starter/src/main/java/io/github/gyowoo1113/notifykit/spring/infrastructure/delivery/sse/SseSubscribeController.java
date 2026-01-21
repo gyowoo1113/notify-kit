@@ -1,6 +1,6 @@
 package io.github.gyowoo1113.notifykit.spring.infrastructure.delivery.sse;
 
-import io.github.gyowoo1113.notifykit.core.domain.SseEvent;
+import io.github.gyowoo1113.notifykit.core.domain.event.SseEvent;
 import io.github.gyowoo1113.notifykit.core.service.port.RecentEventStore;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
