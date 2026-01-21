@@ -1,4 +1,4 @@
-package io.github.gyowoo1113.notifykit.spring.jpa.infrastructure.persistence;
+package io.github.gyowoo1113.notifykit.spring.jpa.infrastructure.persistence.notification;
 
 import io.github.gyowoo1113.notifykit.core.domain.notification.NotificationStatus;
 import org.springframework.data.domain.Page;

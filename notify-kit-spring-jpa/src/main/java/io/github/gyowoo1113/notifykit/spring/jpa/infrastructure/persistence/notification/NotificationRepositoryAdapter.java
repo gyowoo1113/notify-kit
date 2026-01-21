@@ -1,4 +1,4 @@
-package io.github.gyowoo1113.notifykit.spring.jpa.infrastructure.persistence;
+package io.github.gyowoo1113.notifykit.spring.jpa.infrastructure.persistence.notification;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import io.github.gyowoo1113.notifykit.core.domain.notification.Notification;
@@ -6,6 +6,7 @@ import io.github.gyowoo1113.notifykit.core.domain.notification.NotificationStatu
 import io.github.gyowoo1113.notifykit.core.service.port.NotificationRepository;
 import io.github.gyowoo1113.notifykit.core.support.CursorPage;
 import io.github.gyowoo1113.notifykit.core.support.PageResult;
+import io.github.gyowoo1113.notifykit.spring.jpa.infrastructure.persistence.QNotificationEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
