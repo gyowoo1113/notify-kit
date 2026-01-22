@@ -6,7 +6,7 @@ import java.time.Instant;
 import java.util.List;
 
 public interface OutboxRepository {
-    public void save(OutboxMessage msg);
+    public OutboxMessage save(OutboxMessage msg);
     public List<OutboxMessage> findBatchForProcessing(Instant now, int limit);
     public boolean markProcessing(Long id);
     public void markSent(Long id);
