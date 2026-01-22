@@ -79,6 +79,7 @@ Spring 환경에 종속되지 않은 core 모듈과 Spring Boot AutoConfiguratio
 - [NotificationEventPublisher & 이벤트 처리 구조](/docs/architecture/NotificationEventPublisher_&_이벤트_처리_구조.md)
 - [ApplicationEventPublisher vs NotificationEventPublisher](/docs/architecture/ApplicationEventPublisher_vs_NotificationEventPublisher.md)
 - [페이징 설계](/docs/architecture/페이징%20설계.md)
+- [CustomException layout](/docs/architecture/exception.md)
 
 ### Design Decisions (Why)
 
@@ -87,6 +88,7 @@ Spring 환경에 종속되지 않은 core 모듈과 Spring Boot AutoConfiguratio
 - [Why SSE instead of WebSocket](/docs/design/Why_SSE_instead_of_websocket.md)
 - [LocalDateTime vs Instant](/docs/design/LocalDateTime_vs_Instant.md)
 - [record + static factory 사용 이유](/docs/design/record-static-factory.md)
+- [Why not use save for state transitions](/docs/design/Why%20not%20use%20save%20for%20state%20transitions.md)
 
 ### Troubleshooting
 
