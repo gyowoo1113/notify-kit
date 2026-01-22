@@ -1,10 +1,12 @@
 package io.github.gyowoo1113.notifykit.core.domain.outbox;
 
+import lombok.Builder;
 import lombok.Getter;
 
 import java.time.Instant;
 
 @Getter
+@Builder
 public class OutboxMessage {
     private final Long id;
     private final AggregateType aggregateType;
