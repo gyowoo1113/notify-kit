@@ -1,7 +1,6 @@
 package io.github.gyowoo1113.notifykit.spring.jpa.infrastructure.persistence.outbox;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import io.github.gyowoo1113.notifykit.core.domain.outbox.OutboxEventType;
 import io.github.gyowoo1113.notifykit.core.domain.outbox.OutboxMessage;
 import io.github.gyowoo1113.notifykit.core.domain.outbox.OutboxStatus;
 import io.github.gyowoo1113.notifykit.core.service.port.OutboxRepository;
@@ -27,7 +26,21 @@ public class OutboxRepositoryAdapter implements OutboxRepository {
 
     @Override
     public List<OutboxMessage> findBatchForProcessing(Instant now, int limit) {
-        return List.of();
+        return jpaQueryFactory
+                .selectFrom(outboxMessageEntity)
+                .where(
+                        outboxMessageEntity.outboxStatus.eq(OutboxStatus.PENDING)
+                                .and(
+                                        outboxMessageEntity.nextRetryAt.isNull()
+                                                .or(outboxMessageEntity.nextRetryAt.loe(now))
+                                )
+                )
+                .orderBy(outboxMessageEntity.createdAt.asc(),outboxMessageEntity.id.asc())
+                .limit(limit)
+                .fetch()
+                .stream()
+                .map(OutboxMessageEntity::toModel)
+                .toList();
     }
 
     @Override
