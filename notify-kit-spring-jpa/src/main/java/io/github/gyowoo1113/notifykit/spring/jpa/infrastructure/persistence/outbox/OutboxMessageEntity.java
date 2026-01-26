@@ -19,12 +19,14 @@ public class OutboxMessageEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Enumerated(EnumType.STRING)
     @Column(name="aggregateType")
     private AggregateType aggregateType;
 
     @Column(name="aggregateId")
     private Long aggregateId;
 
+    @Enumerated(EnumType.STRING)
     @Column(name="outboxEventType")
     private OutboxEventType outboxEventType;
 
@@ -37,6 +39,7 @@ public class OutboxMessageEntity {
     @Column(name="schemaVersion")
     private int schemaVersion;    // payload version number
 
+    @Enumerated(EnumType.STRING)
     @Column(name="outboxStatus")
     private OutboxStatus outboxStatus;
 

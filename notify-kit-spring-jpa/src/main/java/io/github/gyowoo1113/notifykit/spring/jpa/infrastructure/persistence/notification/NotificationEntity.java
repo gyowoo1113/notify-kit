@@ -28,9 +28,11 @@ public class NotificationEntity {
     @Column(name="content")
     private String content;
 
+    @Enumerated(EnumType.STRING)
     @Column(name="notification_type")
     private NotificationType notificationType;
 
+    @Enumerated(EnumType.STRING)
     @Column(name="notification_status")
     private NotificationStatus notificationStatus;
 
