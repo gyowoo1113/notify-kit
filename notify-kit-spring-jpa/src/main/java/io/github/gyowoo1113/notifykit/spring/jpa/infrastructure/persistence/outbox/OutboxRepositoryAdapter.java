@@ -62,7 +62,7 @@ public class OutboxRepositoryAdapter implements OutboxRepository {
     }
 
     @Override
-    public boolean markFailed(Long id, Instant nextRetryAt, String errorMessgae) {
+    public boolean markFailed(Long id, Instant nextRetryAt, String errorMessage) {
         Instant now = Instant.now();
         long updated = jpaQueryFactory
                 .update(outboxMessageEntity)
