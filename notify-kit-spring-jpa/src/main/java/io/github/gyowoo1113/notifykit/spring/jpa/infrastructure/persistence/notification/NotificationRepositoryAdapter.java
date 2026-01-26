@@ -6,7 +6,7 @@ import io.github.gyowoo1113.notifykit.core.domain.notification.NotificationStatu
 import io.github.gyowoo1113.notifykit.core.service.port.NotificationRepository;
 import io.github.gyowoo1113.notifykit.core.support.CursorPage;
 import io.github.gyowoo1113.notifykit.core.support.PageResult;
-import io.github.gyowoo1113.notifykit.spring.jpa.infrastructure.persistence.QNotificationEntity;
+import static io.github.gyowoo1113.notifykit.spring.jpa.infrastructure.persistence.notification.QNotificationEntity.notificationEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
