@@ -19,9 +19,10 @@ public class OutboxMessage {
     private final int retryCount;
     private final Instant nextRetryAt;
     private final Instant createdAt;
-    private final Instant processedAt;
+    private final Instant processingStartedAt;
+    private final Instant completedAt;
 
-    public OutboxMessage(Long id, AggregateType aggregateType, Long aggregateId, OutboxEventType outboxEventType, Long receiverId, String payloadJson, int schemaVersion, OutboxStatus outboxStatus, int retryCount, Instant nextRetryAt, Instant createdAt, Instant processedAt) {
+    public OutboxMessage(Long id, AggregateType aggregateType, Long aggregateId, OutboxEventType outboxEventType, Long receiverId, String payloadJson, int schemaVersion, OutboxStatus outboxStatus, int retryCount, Instant nextRetryAt, Instant createdAt, Instant processingStartedAt, Instant completedAt) {
         this.id = id;
         this.aggregateType = aggregateType;
         this.aggregateId = aggregateId;
@@ -33,6 +34,7 @@ public class OutboxMessage {
         this.retryCount = retryCount;
         this.nextRetryAt = nextRetryAt;
         this.createdAt = createdAt;
-        this.processedAt = processedAt;
+        this.processingStartedAt = processingStartedAt;
+        this.completedAt = completedAt;
     }
 }

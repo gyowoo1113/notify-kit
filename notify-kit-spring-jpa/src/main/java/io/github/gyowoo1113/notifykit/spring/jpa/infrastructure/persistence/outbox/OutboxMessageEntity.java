@@ -52,8 +52,11 @@ public class OutboxMessageEntity {
     @Column(name="createdAt")
     private Instant createdAt;
 
-    @Column(name="processedAt")
-    private Instant processedAt;
+    @Column(name="processingStartedAt")
+    private Instant processingStartedAt;
+
+    @Column(name="completedAt")
+    private Instant completedAt;
 
     public static OutboxMessageEntity from(OutboxMessage outboxMessage){
         OutboxMessageEntity entity = new OutboxMessageEntity();
@@ -68,7 +71,8 @@ public class OutboxMessageEntity {
         entity.retryCount = outboxMessage.getRetryCount();
         entity.nextRetryAt = outboxMessage.getNextRetryAt();
         entity.createdAt = outboxMessage.getCreatedAt();
-        entity.processedAt = outboxMessage.getProcessedAt();
+        entity.processingStartedAt = outboxMessage.getProcessingStartedAt();
+        entity.createdAt = outboxMessage.getCreatedAt();
         return entity;
     }
 
@@ -85,7 +89,8 @@ public class OutboxMessageEntity {
                 .retryCount(retryCount)
                 .nextRetryAt(nextRetryAt)
                 .createdAt(createdAt)
-                .processedAt(processedAt)
+                .processingStartedAt(processingStartedAt)
+                .createdAt(createdAt)
                 .build();
     }
 }
