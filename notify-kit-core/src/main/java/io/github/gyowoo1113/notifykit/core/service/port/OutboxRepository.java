@@ -11,4 +11,5 @@ public interface OutboxRepository {
     public boolean markProcessing(Long id);
     public boolean markSent(Long id);
     public boolean markFailed(Long id, Instant nextRetryAt);
+    public boolean markFailedFinal(Long id);
 }

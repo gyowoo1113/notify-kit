@@ -90,4 +90,19 @@ public class OutboxRepositoryAdapter implements OutboxRepository {
                 .execute();
         return updated == 1;
     }
+
+    @Override
+    public boolean markFailedFinal(Long id) {
+        long updated = jpaQueryFactory
+                .update(outboxMessageEntity)
+                .set(outboxMessageEntity.outboxStatus, OutboxStatus.FAILED)
+                .set(outboxMessageEntity.processingStartedAt, (Instant) null)
+                .set(outboxMessageEntity.nextRetryAt, (Instant) null)
+                .where(
+                        outboxMessageEntity.id.eq(id),
+                        outboxMessageEntity.outboxStatus.eq(OutboxStatus.PROCESSING)
+                )
+                .execute();
+        return updated == 1;
+    }
 }
