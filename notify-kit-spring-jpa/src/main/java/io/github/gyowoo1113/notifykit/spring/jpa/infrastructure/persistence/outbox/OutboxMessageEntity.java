@@ -72,7 +72,7 @@ public class OutboxMessageEntity {
         entity.nextRetryAt = outboxMessage.getNextRetryAt();
         entity.createdAt = outboxMessage.getCreatedAt();
         entity.processingStartedAt = outboxMessage.getProcessingStartedAt();
-        entity.createdAt = outboxMessage.getCreatedAt();
+        entity.completedAt = outboxMessage.getCompletedAt();
         return entity;
     }
 
@@ -90,7 +90,7 @@ public class OutboxMessageEntity {
                 .nextRetryAt(nextRetryAt)
                 .createdAt(createdAt)
                 .processingStartedAt(processingStartedAt)
-                .createdAt(createdAt)
+                .completedAt(completedAt)
                 .build();
     }
 }

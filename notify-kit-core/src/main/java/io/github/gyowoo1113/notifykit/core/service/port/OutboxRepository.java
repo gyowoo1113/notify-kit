@@ -10,5 +10,5 @@ public interface OutboxRepository {
     public List<OutboxMessage> findBatchForProcessing(Instant now, int limit);
     public boolean markProcessing(Long id);
     public boolean markSent(Long id);
-    public boolean markFailed(Long id, Instant nextRetryAt, String errorMessage);
+    public boolean markFailed(Long id, Instant nextRetryAt);
 }

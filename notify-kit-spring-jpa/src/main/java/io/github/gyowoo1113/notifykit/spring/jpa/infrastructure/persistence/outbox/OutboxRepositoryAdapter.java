@@ -50,6 +50,7 @@ public class OutboxRepositoryAdapter implements OutboxRepository {
                 .update(outboxMessageEntity)
                 .set(outboxMessageEntity.outboxStatus, OutboxStatus.PROCESSING)
                 .set(outboxMessageEntity.processingStartedAt, now)
+                .set(outboxMessageEntity.nextRetryAt, (Instant) null)
                 .where(
                         outboxMessageEntity.id.eq(id),
                         outboxMessageEntity.outboxStatus.eq(OutboxStatus.PENDING)
@@ -65,6 +66,7 @@ public class OutboxRepositoryAdapter implements OutboxRepository {
                 .update(outboxMessageEntity)
                 .set(outboxMessageEntity.outboxStatus,OutboxStatus.SENT)
                 .set(outboxMessageEntity.completedAt,now)
+                .set(outboxMessageEntity.nextRetryAt, (Instant) null)
                 .where(
                         outboxMessageEntity.id.eq(id),
                         outboxMessageEntity.outboxStatus.eq(OutboxStatus.PROCESSING)
@@ -74,13 +76,12 @@ public class OutboxRepositoryAdapter implements OutboxRepository {
     }
 
     @Override
-    public boolean markFailed(Long id, Instant nextRetryAt, String errorMessage) {
-        Instant now = Instant.now();
+    public boolean markFailed(Long id, Instant nextRetryAt) {
         long updated = jpaQueryFactory
                 .update(outboxMessageEntity)
-                .set(outboxMessageEntity.outboxStatus,OutboxStatus.FAILED)
-                .set(outboxMessageEntity.completedAt,now)
+                .set(outboxMessageEntity.outboxStatus,OutboxStatus.PENDING)
                 .set(outboxMessageEntity.nextRetryAt,nextRetryAt)
+                .set(outboxMessageEntity.processingStartedAt, (Instant)null)
                 .set(outboxMessageEntity.retryCount,outboxMessageEntity.retryCount.add(1))
                 .where(
                         outboxMessageEntity.id.eq(id),
