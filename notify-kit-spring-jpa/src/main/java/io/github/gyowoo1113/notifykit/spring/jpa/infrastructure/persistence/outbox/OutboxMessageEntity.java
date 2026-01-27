@@ -46,6 +46,9 @@ public class OutboxMessageEntity {
     @Column(name="retryCount")
     private int retryCount;
 
+    @Column(name="eventId")
+    private long eventId;
+
     @Column(name="nextRetryAt")
     private Instant nextRetryAt;
 
@@ -69,6 +72,7 @@ public class OutboxMessageEntity {
         entity.schemaVersion = outboxMessage.getSchemaVersion();
         entity.outboxStatus = outboxMessage.getOutboxStatus();
         entity.retryCount = outboxMessage.getRetryCount();
+        entity.eventId = outboxMessage.getEventId();
         entity.nextRetryAt = outboxMessage.getNextRetryAt();
         entity.createdAt = outboxMessage.getCreatedAt();
         entity.processingStartedAt = outboxMessage.getProcessingStartedAt();
@@ -87,6 +91,7 @@ public class OutboxMessageEntity {
                 .schemaVersion(schemaVersion)
                 .outboxStatus(outboxStatus)
                 .retryCount(retryCount)
+                .eventId(eventId)
                 .nextRetryAt(nextRetryAt)
                 .createdAt(createdAt)
                 .processingStartedAt(processingStartedAt)
