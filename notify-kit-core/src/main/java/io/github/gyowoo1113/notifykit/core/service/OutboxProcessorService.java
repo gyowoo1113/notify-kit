@@ -45,6 +45,7 @@ public class OutboxProcessorService {
         try {
             outboxSender.send(message).join();
         } catch (CompletionException e) {
+            throw OutboxException.sendFailed(message.getOutboxEventType().name());
         }
     }
 

@@ -16,4 +16,8 @@ public class OutboxException extends NotifyKitException {
     public static OutboxException saveFailed(String eventType){
         return new OutboxException("OUTBOX.SAVE_FAILED." + eventType);
     }
+
+    public static OutboxException sendFailed(String transport) {
+        return new OutboxException("OUTBOX.SEND_FAILED." + transport);
+    }
 }
