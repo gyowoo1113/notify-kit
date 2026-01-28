@@ -15,4 +15,9 @@ public abstract class NotifyKitException extends RuntimeException {
         super(detail == null || detail.isBlank() ? code : detail);
         this.code = code;
     }
+
+    protected NotifyKitException(String code, Throwable cause){
+        super(code,cause);
+        this.code = code;
+    }
 }
