@@ -7,6 +7,7 @@ import io.github.gyowoo1113.notifykit.core.service.port.OutboxRepository;
 import io.github.gyowoo1113.notifykit.core.service.port.OutboxSender;
 import lombok.RequiredArgsConstructor;
 
+import java.time.Duration;
 import java.time.Instant;
 import java.util.List;
 
@@ -15,8 +16,9 @@ public class OutboxWorker {
     private final OutboxProcessorService processorService;
     private final int BATCH_SIZE = 100;
     private final int RETRY_LIMIT = 10;
+    private final Duration RETRY_DELAY = Duration.ofSeconds(5);
 
     public void process() {
-        processorService.processBatch(Instant.now(),BATCH_SIZE,RETRY_LIMIT);
+        processorService.processBatch(Instant.now(),BATCH_SIZE,RETRY_LIMIT,RETRY_DELAY);
     }
 }

@@ -6,6 +6,7 @@ import io.github.gyowoo1113.notifykit.core.service.port.OutboxRepository;
 import io.github.gyowoo1113.notifykit.core.service.port.OutboxSender;
 import lombok.RequiredArgsConstructor;
 
+import java.time.Duration;
 import java.time.Instant;
 import java.util.List;
 import java.util.concurrent.CompletionException;
@@ -15,7 +16,7 @@ public class OutboxProcessorService {
     private final OutboxRepository repository;
     private final OutboxSender outboxSender;
 
-    public void processBatch(Instant now, int batchSize, int retryLimit){
+    public void processBatch(Instant now, int batchSize, int retryLimit, Duration retryDelay){
         List<OutboxMessage> messages = loadBatch(now,batchSize);
 
         for (OutboxMessage message : messages) {
@@ -28,7 +29,7 @@ public class OutboxProcessorService {
                 dispatch(message);
                 onSuccess(message.getId());
             } catch (Exception e) {
-                onFailure(message,retryLimit,now);
+                onFailure(message,retryLimit,retryDelay, now);
             }
         }
     }
@@ -54,13 +55,13 @@ public class OutboxProcessorService {
         repository.markSent(id);
     }
 
-    private void onFailure(OutboxMessage message, int retryLimit, Instant now){
+    private void onFailure(OutboxMessage message, int retryLimit, Duration retryDelay, Instant now){
         int nextRetryCount = message.getRetryCount() + 1;
         if (nextRetryCount > retryLimit) {
             repository.markFailedFinal(message.getId());
             return;
         }
 
-        repository.markFailed(message.getId(), now.plusSeconds(5));
+        repository.markFailed(message.getId(), now.plus(retryDelay));
     }
 }
