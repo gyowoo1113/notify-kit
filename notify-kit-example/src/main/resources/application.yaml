@@ -30,5 +30,14 @@ springdoc:
 debug : true
 
 notify:
-  sse:
+  outbox:
     enabled: true
+    sender: sse
+
+    batch-size: 200
+    retry-limit: 5
+    retry-delay: 3s
+
+    scheduler:
+      enabled: true
+      fixed-delay: 5s
