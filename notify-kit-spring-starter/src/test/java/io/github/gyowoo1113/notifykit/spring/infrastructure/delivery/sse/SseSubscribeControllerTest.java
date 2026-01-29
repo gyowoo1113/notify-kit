@@ -7,6 +7,7 @@ import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -22,7 +23,7 @@ class SseSubscribeControllerTest {
 
     @Test
     void subscribe_endpoint_is_exposed() throws Exception {
-        mockMvc.perform(get("/notification/subscribe")
+        mockMvc.perform(get("/notification/sse/subscribe")
                 .param("receiverId","1"))
                 .andExpect(status().isOk())
                 .andExpect(header().string("Content-Type",
@@ -31,6 +32,7 @@ class SseSubscribeControllerTest {
 
     @SpringBootConfiguration
     @EnableAutoConfiguration
+    @ComponentScan(basePackages = "io.github.gyowoo1113.notifykit.spring.infrastructure.delivery.sse")
     static class SseTestApp {
     }
 }
