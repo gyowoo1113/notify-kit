@@ -14,11 +14,10 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplicat
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 
-@AutoConfiguration
+@AutoConfiguration(before = NotifyAutoConfiguration.class)
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 @ConditionalOnClass(name = "org.springframework.web.servlet.DispatcherServlet")
 @Import(ExceptionControllerAdvice.class)
-@AutoConfigureBefore(NotifyAutoConfiguration.class)
 public class NotifyWebAutoConfiguration {
 
     @Bean

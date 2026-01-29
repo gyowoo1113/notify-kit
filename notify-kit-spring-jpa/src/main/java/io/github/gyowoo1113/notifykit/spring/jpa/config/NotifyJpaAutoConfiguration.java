@@ -20,7 +20,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-@AutoConfiguration
+@AutoConfiguration(before = NotifyAutoConfiguration.class)
 @ConditionalOnClass({JpaRepository.class, JPAQueryFactory.class})
 @EnableJpaRepositories(basePackageClasses = {
         NotificationJpaRepository.class,
@@ -30,7 +30,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
         NotificationEntity.class,
         OutboxMessageEntity.class
 })
-@AutoConfigureBefore(NotifyAutoConfiguration.class)
 public class NotifyJpaAutoConfiguration {
 
     @Bean
