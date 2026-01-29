@@ -9,6 +9,7 @@ import io.github.gyowoo1113.notifykit.core.service.port.OutboxRepository;
 import io.github.gyowoo1113.notifykit.core.service.port.OutboxSender;
 import io.github.gyowoo1113.notifykit.core.service.port.noop.NoopOutboxSender;
 import io.github.gyowoo1113.notifykit.spring.application.NotificationFacade;
+import io.github.gyowoo1113.notifykit.spring.config.properties.OutboxProperties;
 import io.github.gyowoo1113.notifykit.spring.infrastructure.delivery.common.AtomicEventIdGenerator;
 import io.github.gyowoo1113.notifykit.spring.infrastructure.delivery.event.NotificationCreatedEventListener;
 import io.github.gyowoo1113.notifykit.spring.infrastructure.delivery.outbox.OutboxWorker;
@@ -16,10 +17,12 @@ import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Bean;
 
 @AutoConfiguration
+@EnableConfigurationProperties(OutboxProperties.class)
 public class NotifyAutoConfiguration {
 
     @Bean
@@ -69,7 +72,7 @@ public class NotifyAutoConfiguration {
     @ConditionalOnMissingBean
     @ConditionalOnProperty(prefix = "notify.outbox", name = "enabled", havingValue = "true")
     @ConditionalOnBean(OutboxProcessorService.class)
-    public OutboxWorker outboxWorker(OutboxProcessorService processorService){
-        return new OutboxWorker(processorService);
+    public OutboxWorker outboxWorker(OutboxProcessorService processorService, OutboxProperties properties){
+        return new OutboxWorker(processorService, properties);
     }
 }
