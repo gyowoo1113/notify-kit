@@ -6,6 +6,7 @@ import io.github.gyowoo1113.notifykit.core.service.port.noop.RecentNoopEventStor
 import io.github.gyowoo1113.notifykit.spring.infrastructure.delivery.advice.ExceptionControllerAdvice;
 import io.github.gyowoo1113.notifykit.spring.infrastructure.delivery.sse.*;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -17,6 +18,7 @@ import org.springframework.context.annotation.Import;
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 @ConditionalOnClass(name = "org.springframework.web.servlet.DispatcherServlet")
 @Import(ExceptionControllerAdvice.class)
+@AutoConfigureBefore(NotifyAutoConfiguration.class)
 public class NotifyWebAutoConfiguration {
 
     @Bean
