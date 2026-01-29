@@ -1,2 +1,4 @@
-io.github.gyowoo1113.notifykit.spring.config.NotifyAutoConfiguration
+io.github.gyowoo1113.notifykit.spring.config.NotifyCoreAutoConfiguration
 io.github.gyowoo1113.notifykit.spring.config.NotifyWebAutoConfiguration
+io.github.gyowoo1113.notifykit.spring.config.NotifyOutboxAutoConfiguration
+io.github.gyowoo1113.notifykit.spring.config.NotifyNoopAutoConfiguration

@@ -2,11 +2,9 @@ package io.github.gyowoo1113.notifykit.spring.config;
 
 import io.github.gyowoo1113.notifykit.core.service.port.OutboxSender;
 import io.github.gyowoo1113.notifykit.core.service.port.RecentEventStore;
-import io.github.gyowoo1113.notifykit.core.service.port.noop.RecentNoopEventStore;
 import io.github.gyowoo1113.notifykit.spring.infrastructure.delivery.advice.ExceptionControllerAdvice;
 import io.github.gyowoo1113.notifykit.spring.infrastructure.delivery.sse.*;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
-import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -14,18 +12,11 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplicat
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 
-@AutoConfiguration(before = NotifyAutoConfiguration.class)
+@AutoConfiguration(before = NotifyOutboxAutoConfiguration.class)
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 @ConditionalOnClass(name = "org.springframework.web.servlet.DispatcherServlet")
 @Import(ExceptionControllerAdvice.class)
 public class NotifyWebAutoConfiguration {
-
-    @Bean
-    @ConditionalOnMissingBean
-    @ConditionalOnProperty(prefix="notify.outbox", name="sender", havingValue="noop")
-    public RecentEventStore recentNoopEventStore() {
-        return new RecentNoopEventStore();
-    }
 
     @Bean
     @ConditionalOnMissingBean

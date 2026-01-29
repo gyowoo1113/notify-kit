@@ -33,3 +33,7 @@ notify:
   outbox:
     enabled: true
     sender: sse
+
+    batch-size: 200
+    retry-limit: 5
+    retry-delay: 3s
