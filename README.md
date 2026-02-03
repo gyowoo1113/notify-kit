@@ -14,33 +14,90 @@
 ---
 ## 🏗 Architecture & Design
 ### 1. Port & Adapter (Hexagonal) Layout
-
 비즈니스 로직이 특정 기술(JPA, SSE)에 의존하지 않도록 인터페이스(Port)를 통해 외부 세계와 소통합니다. 이를 통해 저장소나 전송 매체를 손쉽게 교체할 수 있습니다.
+```mermaid
+graph TD
+    subgraph NK [notify-kit : multi-module]
+        direction TB
+        CORE(["<b>notify-kit-core</b><br/>Domain / UseCase / Ports"])
+        JPA(["<b>notify-kit-spring-jpa</b><br/>JPA Adapters"])
+        STARTER(["<b>notify-kit-spring-starter</b><br/>AutoConfiguration / Facade"])
+        EXAMPLE(["<b>notify-kit-example</b><br/>Demo Application"])
+    end
+
+    subgraph CLIENT [Client Application]
+        APP(["<b>client-app</b><br/>Spring Boot Service"])
+    end
+
+    SSE{{"<b>SSE (Optional)</b><br/>notify.sse.enabled=true"}}
+
+    %% Relationships
+    JPA -- "implements ports" --> CORE
+    STARTER --> CORE
+    
+    EXAMPLE --> JPA
+    EXAMPLE --> STARTER
+    
+    APP --> JPA
+    APP --> STARTER
+    
+    STARTER -. "conditional" .-> SSE
+
+    %% Styling
+    style NK fill:#fffef0,stroke:#d4af37,stroke-width:2px
+    style CLIENT fill:#fffef0,stroke:#d4af37,stroke-width:2px
+    style CORE fill:#e8eaf6,stroke:#3f51b5,stroke-width:2px
+    style JPA fill:#e8eaf6,stroke:#3f51b5,stroke-width:2px
+    style STARTER fill:#e8eaf6,stroke:#3f51b5,stroke-width:2px
+    style EXAMPLE fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
+    style APP fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
+    style SSE fill:#fafafa,stroke:#9e9e9e,stroke-dasharray: 5 5
+```
+
+
 ### 2. Event-Driven Reliability (Transactional Outbox)
 
 ```mermaid
 sequenceDiagram
-    participant App as Client Application
-    participant Facade as NotificationFacade
-    participant DB as RDB<br/>(Notification + Outbox)
-    participant Event as EventPublisher<br/>(AFTER_COMMIT)
-    participant SSE as SSE Adapter
-    participant Worker as Outbox Worker<br/>(Scheduler)
+    autonumber
+    
+    %% Participant Definitions with Styling
+    participant App as 📱 Client Application
+    participant Facade as ⚙️ NotificationFacade
+    participant DB as 🗄️ RDB (Notification + Outbox)
+    participant Event as 📢 EventPublisher
+    participant SSE as ⚡ SSE Adapter
+    participant Worker as 🔄 Outbox Worker (Scheduler)
 
+    %% Styling (Individual coloring for emphasis)
+    Note over App, DB: [Phase 1] Transactional Storage
+    
     App->>Facade: 알림 생성 요청
     activate Facade
     Facade->>DB: [Transaction] 알림 & Outbox 저장
     DB-->>Facade: Commit OK
-    Facade->>Event: 이벤트 발행
+    
+    Note over Facade, Event: [Phase 2] Best-effort Delivery
+    Facade->>Event: 이벤트 발행 (AFTER_COMMIT)
     deactivate Facade
 
-    Event->>SSE: 실시간 전송 시도 (Best-effort)
+    Event->>SSE: 실시간 전송 시도
+    activate SSE
+    SSE-->>Event: 전송 결과 (성공/실패 무관)
+    deactivate SSE
 
-    par Background Processing
-        Worker->>DB: Outbox 조회 (주기적)
-        Worker->>SSE: 전송 재시도
-        SSE-->>Worker: 성공 / 실패
-        Worker->>DB: 상태 업데이트
+    %% Background Process Styling
+    rect rgb(245, 245, 255)
+        Note over Worker, DB: [Phase 3] Background Reliability (Polling)
+        par Background Processing
+            loop Periodic Polling
+                Worker->>DB: 미발송 Outbox 조회
+                DB-->>Worker: Outbox List
+                Worker->>SSE: 전송 재시도
+                SSE-->>Worker: 결과 수신 (Success/Fail)
+                Worker->>DB: Outbox 상태 업데이트 (Completed/Failed)
+            end
+        end
     end
 ```
 ---
