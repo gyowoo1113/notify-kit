@@ -30,6 +30,13 @@ participant Facade as NotificationFacade
 participant DB as RDB (Notification + Outbox)
 participant Event as EventPublisher
 participant SSE as SSE Adapter
+```mermaid
+sequenceDiagram
+    participant App as Client Application
+    participant Facade as NotificationFacade
+    participant DB as RDB (Notification + Outbox)
+    participant Event as EventPublisher
+    participant SSE as SSE Adapter
 
     App->>Facade: 알림 생성 요청
     activate Facade
@@ -42,7 +49,7 @@ participant SSE as SSE Adapter
     alt 전송 실패 시
         Note over SSE, DB: 스케줄러(Worker)가 Outbox를 조회하여 재시도
     end
-
+```
 ---
 ## ✨ Key Features
 
@@ -80,4 +87,4 @@ participant SSE as SSE Adapter
 - **[Why NotificationFacade?](docs/design/Why_NotificationFacade.md)**: 복잡한 트랜잭션과 이벤트 오케스트레이션을 캡슐화한 이유
 - **[SSE vs WebSocket](docs/design/Why_SSE_instead_of_websocket.md)**: 알림 서비스에 단방향 통신인 SSE가 더 적합했던 이유
 - **[Outbox 기반 신뢰성 전송](docs/architecture/outbox-reliability.md)**: 메시지 브로커 없이 RDB만으로 전송 신뢰성을 확보하는 방법
-- **[Soft Delete vs State Transition](docs/design/Why%2520not%2520use%2520save%2520for%2520state%2520transitions.md)**: 변경 감지(Dirty Checking)를 통한 상태 관리 전략
+- **[Soft Delete vs State Transition](docs/design/Why not use save for state transitions.md)**: 변경 감지(Dirty Checking)를 통한 상태 관리 전략
