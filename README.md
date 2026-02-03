@@ -28,20 +28,25 @@
 sequenceDiagram
     participant App as Client Application
     participant Facade as NotificationFacade
-    participant DB as RDB (Notification + Outbox)
-    participant Event as EventPublisher
+    participant DB as RDB<br/>(Notification + Outbox)
+    participant Event as EventPublisher<br/>(AFTER_COMMIT)
     participant SSE as SSE Adapter
+    participant Worker as Outbox Worker<br/>(Scheduler)
 
     App->>Facade: 알림 생성 요청
     activate Facade
     Facade->>DB: [Transaction] 알림 & Outbox 저장
     DB-->>Facade: Commit OK
-    Facade->>Event: 이벤트 발행 (AFTER_COMMIT)
+    Facade->>Event: 이벤트 발행
     deactivate Facade
-    
-    Event->>SSE: 실시간 전송 시도
-    alt 전송 실패 시
-        Note over SSE, DB: 스케줄러(Worker)가 Outbox를 조회하여 재시도
+
+    Event->>SSE: 실시간 전송 시도 (Best-effort)
+
+    par Background Processing
+        Worker->>DB: Outbox 조회 (주기적)
+        Worker->>SSE: 전송 재시도
+        SSE-->>Worker: 성공 / 실패
+        Worker->>DB: 상태 업데이트
     end
 ```
 ---
