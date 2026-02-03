@@ -24,12 +24,6 @@
   - DB 커밋 이후에만 외부 전송(SSE)을 시도하여 전송 실패가 비즈니스 트랜잭션에 영향을 주지 않도록 분리
 - **Step 3**: 전송 실패 시, 별도의 스케줄러(Worker)가 Outbox를 조회하여 재시도 수행
 
-sequenceDiagram
-participant App as Client Application
-participant Facade as NotificationFacade
-participant DB as RDB (Notification + Outbox)
-participant Event as EventPublisher
-participant SSE as SSE Adapter
 ```mermaid
 sequenceDiagram
     participant App as Client Application
