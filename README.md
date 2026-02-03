@@ -18,12 +18,6 @@
 비즈니스 로직이 특정 기술(JPA, SSE)에 의존하지 않도록 인터페이스(Port)를 통해 외부 세계와 소통합니다. 이를 통해 저장소나 전송 매체를 손쉽게 교체할 수 있습니다.
 ### 2. Event-Driven Reliability (Transactional Outbox)
 
-알림 저장과 전송 간의 원자성을 보장하기 위해 **Transactional Outbox** 패턴을 적용했습니다.
-- **Step 1**: 비즈니스 로직 실행 및 알림/Outbox 데이터를 동일 트랜잭션 내 DB 저장
-- **Step 2**: `TransactionPhase.AFTER_COMMIT`을 통해 이벤트 발행 및 실시간 전송(SSE) 시도
-  - DB 커밋 이후에만 외부 전송(SSE)을 시도하여 전송 실패가 비즈니스 트랜잭션에 영향을 주지 않도록 분리
-- **Step 3**: 전송 실패 시, 별도의 스케줄러(Worker)가 Outbox를 조회하여 재시도 수행
-
 ```mermaid
 sequenceDiagram
     participant App as Client Application
@@ -68,22 +62,10 @@ sequenceDiagram
 
 ---
 
-## 🛠 Tech Stack
-
-| **Category**    | **Technology**                     |
-| --------------- | ---------------------------------- |
-| **Language**    | Java 17                            |
-| **Framework**   | Spring Boot 3.x                    |
-| **Persistence** | Spring Data JPA (Optional Adapter) |
-| **Real-time**   | Server-Sent Events (SSE)           |
-| **Build Tool**  | Gradle                             |
-
----
-
 ## 📖 Technical Decision Records (Deep Dive)
 
 프로젝트를 진행하며 고민했던 설계적 선택의 근거들입니다. 자세한 내용은 `docs/`에서 확인하실 수 있습니다.
 - **[Why NotificationFacade?](docs/design/Why_NotificationFacade.md)**: 복잡한 트랜잭션과 이벤트 오케스트레이션을 캡슐화한 이유
 - **[SSE vs WebSocket](docs/design/Why_SSE_instead_of_websocket.md)**: 알림 서비스에 단방향 통신인 SSE가 더 적합했던 이유
-- **[Outbox 기반 신뢰성 전송](docs/architecture/outbox-reliability.md)**: 메시지 브로커 없이 RDB만으로 전송 신뢰성을 확보하는 방법
-- **[Soft Delete vs State Transition](docs/design/Why not use save for state transitions.md)**: 변경 감지(Dirty Checking)를 통한 상태 관리 전략
+- **[Outbox 기반 신뢰성 전송](docs/architecture/outbox-reliability.md)**: 메시지 브로커 없이 RDB만으로 전송 신뢰성을 확보하는 방법 (작성예정)
+- **[Soft Delete vs State Transition](docs/design/Why%20not%20use%20save%20for%20state%20transitions.md)**: 변경 감지(Dirty Checking)를 통한 상태 관리 전략
