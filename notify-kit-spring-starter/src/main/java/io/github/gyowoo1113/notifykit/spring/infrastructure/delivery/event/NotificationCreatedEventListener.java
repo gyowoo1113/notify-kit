@@ -23,7 +23,7 @@ public class NotificationCreatedEventListener {
     private final ObjectMapper objectMapper;
     private final EventIdGenerator eventIdGenerator;
 
-    @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
+    @TransactionalEventListener(phase = TransactionPhase.BEFORE_COMMIT)
     public void onCreated(NotificationCreatedEvent event) {
         Notification notification = event.notification();
         OutboxEventType eventType = OutboxEventType.NOTIFICATION_CREATED;

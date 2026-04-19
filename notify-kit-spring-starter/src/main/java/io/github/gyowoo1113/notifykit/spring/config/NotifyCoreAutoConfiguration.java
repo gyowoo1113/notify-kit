@@ -1,9 +1,11 @@
 package io.github.gyowoo1113.notifykit.spring.config;
 
 import io.github.gyowoo1113.notifykit.core.service.NotificationService;
+import io.github.gyowoo1113.notifykit.core.service.OutboxProcessorService;
 import io.github.gyowoo1113.notifykit.core.service.port.EventIdGenerator;
 import io.github.gyowoo1113.notifykit.core.service.port.NotificationRepository;
 import io.github.gyowoo1113.notifykit.spring.application.NotificationFacade;
+import io.github.gyowoo1113.notifykit.spring.application.OutboxProcessorFacade;
 import io.github.gyowoo1113.notifykit.spring.config.properties.OutboxProperties;
 import io.github.gyowoo1113.notifykit.spring.infrastructure.delivery.common.AtomicEventIdGenerator;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
@@ -35,5 +37,12 @@ public class NotifyCoreAutoConfiguration {
     @ConditionalOnBean(NotificationService.class)
     public NotificationFacade notificationFacade(NotificationService notificationService, ApplicationEventPublisher applicationEventPublisher) {
         return new NotificationFacade(notificationService, applicationEventPublisher);
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
+    @ConditionalOnBean(OutboxProcessorService.class)
+    public OutboxProcessorFacade outboxProcessorFacade(OutboxProcessorService outboxProcessorService) {
+        return new OutboxProcessorFacade(outboxProcessorService);
     }
 }

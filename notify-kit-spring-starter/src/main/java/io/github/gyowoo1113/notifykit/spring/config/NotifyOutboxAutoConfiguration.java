@@ -5,6 +5,7 @@ import io.github.gyowoo1113.notifykit.core.service.OutboxProcessorService;
 import io.github.gyowoo1113.notifykit.core.service.port.EventIdGenerator;
 import io.github.gyowoo1113.notifykit.core.service.port.OutboxRepository;
 import io.github.gyowoo1113.notifykit.core.service.port.OutboxSender;
+import io.github.gyowoo1113.notifykit.spring.application.OutboxProcessorFacade;
 import io.github.gyowoo1113.notifykit.spring.config.condition.ConditionalOnOutboxPipelineEnabled;
 import io.github.gyowoo1113.notifykit.spring.config.properties.OutboxProperties;
 import io.github.gyowoo1113.notifykit.spring.infrastructure.delivery.event.NotificationCreatedEventListener;
@@ -35,7 +36,14 @@ public class NotifyOutboxAutoConfiguration {
     @Bean
     @ConditionalOnMissingBean
     @ConditionalOnBean(OutboxProcessorService.class)
-    public OutboxWorker outboxWorker(OutboxProcessorService processorService, OutboxProperties properties){
-        return new OutboxWorker(processorService, properties);
+    public OutboxProcessorFacade outboxProcessorFacade(OutboxProcessorService processorService){
+        return new OutboxProcessorFacade(processorService);
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
+    @ConditionalOnBean(OutboxProcessorFacade.class)
+    public OutboxWorker outboxWorker(OutboxProcessorFacade processorFacade, OutboxProperties properties){
+        return new OutboxWorker(processorFacade, properties);
     }
 }
