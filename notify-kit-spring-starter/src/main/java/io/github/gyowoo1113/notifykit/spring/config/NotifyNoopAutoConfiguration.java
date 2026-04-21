@@ -1,7 +1,9 @@
 package io.github.gyowoo1113.notifykit.spring.config;
 
+import io.github.gyowoo1113.notifykit.core.service.port.NotificationCreatedHandler;
 import io.github.gyowoo1113.notifykit.core.service.port.OutboxSender;
 import io.github.gyowoo1113.notifykit.core.service.port.RecentEventStore;
+import io.github.gyowoo1113.notifykit.core.service.port.noop.NoopNotificationCreatedHandler;
 import io.github.gyowoo1113.notifykit.core.service.port.noop.NoopOutboxSender;
 import io.github.gyowoo1113.notifykit.core.service.port.noop.RecentNoopEventStore;
 import org.springframework.boot.autoconfigure.AutoConfiguration;

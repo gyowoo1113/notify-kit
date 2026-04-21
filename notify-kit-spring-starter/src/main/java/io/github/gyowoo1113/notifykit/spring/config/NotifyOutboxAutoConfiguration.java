@@ -3,12 +3,13 @@ package io.github.gyowoo1113.notifykit.spring.config;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.gyowoo1113.notifykit.core.service.OutboxProcessorService;
 import io.github.gyowoo1113.notifykit.core.service.port.EventIdGenerator;
+import io.github.gyowoo1113.notifykit.core.service.port.NotificationCreatedHandler;
 import io.github.gyowoo1113.notifykit.core.service.port.OutboxRepository;
 import io.github.gyowoo1113.notifykit.core.service.port.OutboxSender;
+import io.github.gyowoo1113.notifykit.spring.application.NotificationOutboxHandler;
 import io.github.gyowoo1113.notifykit.spring.application.OutboxProcessorFacade;
 import io.github.gyowoo1113.notifykit.spring.config.condition.ConditionalOnOutboxPipelineEnabled;
 import io.github.gyowoo1113.notifykit.spring.config.properties.OutboxProperties;
-import io.github.gyowoo1113.notifykit.spring.infrastructure.delivery.event.NotificationCreatedEventListener;
 import io.github.gyowoo1113.notifykit.spring.infrastructure.delivery.outbox.OutboxWorker;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
@@ -20,10 +21,10 @@ import org.springframework.context.annotation.Bean;
 public class NotifyOutboxAutoConfiguration {
 
     @Bean
-    @ConditionalOnMissingBean
-    @ConditionalOnBean({OutboxRepository.class, OutboxSender.class})
-    public NotificationCreatedEventListener notificationCreatedEventListener(OutboxRepository outboxRepository, ObjectMapper objectMapper, EventIdGenerator generator){
-        return new NotificationCreatedEventListener(outboxRepository,objectMapper,generator);
+    @ConditionalOnMissingBean(NotificationCreatedHandler.class)
+    @ConditionalOnBean({OutboxRepository.class, EventIdGenerator.class})
+    public NotificationOutboxHandler notificationOutboxHandler(OutboxRepository outboxRepository, ObjectMapper objectMapper, EventIdGenerator generator){
+        return new NotificationOutboxHandler(outboxRepository,objectMapper,generator);
     }
 
     @Bean
