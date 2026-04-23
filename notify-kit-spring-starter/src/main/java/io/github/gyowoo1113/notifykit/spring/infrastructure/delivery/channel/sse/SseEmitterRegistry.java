@@ -1,4 +1,4 @@
-package io.github.gyowoo1113.notifykit.spring.infrastructure.delivery.sse;
+package io.github.gyowoo1113.notifykit.spring.infrastructure.delivery.channel.sse;
 
 import io.github.gyowoo1113.notifykit.core.exception.ConflictException;
 import lombok.extern.slf4j.Slf4j;
