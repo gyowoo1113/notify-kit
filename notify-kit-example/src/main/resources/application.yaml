@@ -32,7 +32,7 @@ debug : true
 notify:
   outbox:
     enabled: true
-    sender: sse
+    sender: slack
 
     batch-size: 200
     retry-limit: 5
@@ -41,3 +41,7 @@ notify:
     scheduler:
       enabled: true
       fixed-delay: 5s
+
+  slack:
+    enabled: true
+    webhook-url: ${SLACK_WEBHOOK_URL}

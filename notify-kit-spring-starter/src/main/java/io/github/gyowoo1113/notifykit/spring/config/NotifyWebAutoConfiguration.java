@@ -7,7 +7,6 @@ import io.github.gyowoo1113.notifykit.spring.infrastructure.delivery.channel.sse
 import io.github.gyowoo1113.notifykit.spring.infrastructure.delivery.channel.sse.SseEmitterRegistry;
 import io.github.gyowoo1113.notifykit.spring.infrastructure.delivery.channel.sse.SseOutboxSender;
 import io.github.gyowoo1113.notifykit.spring.infrastructure.delivery.channel.sse.SseSubscribeController;
-import io.github.gyowoo1113.notifykit.spring.infrastructure.delivery.sse.*;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
