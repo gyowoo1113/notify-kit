@@ -6,7 +6,7 @@ plugins {
 }
 
 group = 'io.github.gyowoo1113'
-version = '0.1.0'
+version = '0.1.3'
 description = 'notify-kit spring module'
 
 java {
@@ -44,7 +44,7 @@ publishing {
 
 			groupId = 'io.github.gyowoo1113'
 			artifactId = 'notify-kit-spring-starter'
-			version = '0.1.0'
+			version = project.version
 		}
 	}
 }
