@@ -1,9 +1,21 @@
 plugins {
     id 'java-library'
+    id 'maven-publish'
 }
 
 dependencies {
     compileOnly 'org.projectlombok:lombok:1.18.30'
     annotationProcessor 'org.projectlombok:lombok:1.18.30'
     implementation "org.slf4j:slf4j-api:2.0.16"
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+            groupId = 'io.github.gyowoo1113'
+            artifactId = 'notify-kit-core'
+            version = '0.1.0'
+        }
+    }
 }
