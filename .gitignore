@@ -215,3 +215,6 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 .idea/
+
+# Keep Gradle Wrapper
+!gradle/wrapper/gradle-wrapper.jar
