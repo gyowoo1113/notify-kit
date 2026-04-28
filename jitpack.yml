@@ -1,0 +1,5 @@
+jdk:
+  - openjdk21
+
+install:
+  - ./gradlew clean :notify-kit-core:publishToMavenLocal :notify-kit-spring-starter:publishToMavenLocal -x test
